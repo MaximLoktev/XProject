@@ -208,6 +208,7 @@
 				F5314B2D2438BB5300D3BB79 /* Frameworks */,
 				F5314B2E2438BB5300D3BB79 /* Resources */,
 				5E47BD64FFB84423F53AFABA /* [CP] Embed Pods Frameworks */,
+				F5FA9E45243A162500C7601A /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -302,6 +303,24 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		F5FA9E45243A162500C7601A /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -455,7 +474,7 @@
 			baseConfigurationReference = 3ABE5E03F81F1E953312B057 /* Pods-XProject.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = XProject/XProject.entitlements;
+				CODE_SIGN_ENTITLEMENTS = XProject/Resources/XProject.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = EV4MFSH375;
 				INFOPLIST_FILE = XProject/Resources/Info.plist;
@@ -476,7 +495,7 @@
 			baseConfigurationReference = 6A9FC9FB01390091CB4592F4 /* Pods-XProject.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = XProject/XProject.entitlements;
+				CODE_SIGN_ENTITLEMENTS = XProject/Resources/XProject.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = EV4MFSH375;
 				INFOPLIST_FILE = XProject/Resources/Info.plist;

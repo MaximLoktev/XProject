@@ -6,14 +6,14 @@
 //  Copyright © 2020 Максим Локтев. All rights reserved.
 //
 
-import UIKit
 import AuthenticationServices
+import UIKit
 
-protocol RootModuleInput: class {
+internal protocol RootModuleInput: class {
     
 }
 
-class RootViewController: UITabBarController, RootModuleInput {
+internal class RootViewController: UITabBarController, RootModuleInput {
     
     // MARK: - View life cycle
     

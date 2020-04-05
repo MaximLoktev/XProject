@@ -6,11 +6,11 @@
 //  Copyright © 2020 Максим Локтев. All rights reserved.
 //
 
-import UIKit
 import CoreData
+import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+internal class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
@@ -28,4 +28,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
-
