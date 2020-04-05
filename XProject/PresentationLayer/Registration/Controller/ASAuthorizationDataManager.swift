@@ -6,10 +6,11 @@
 //  Copyright © 2020 Максим Локтев. All rights reserved.
 //
 
-import UIKit
 import AuthenticationServices
+import UIKit
 
-class ASAuthorizationDataManager: NSObject, ASAuthorizationControllerPresentationContextProviding, ASAuthorizationControllerDelegate {
+internal class ASAuthorizationDataManager: NSObject,
+ASAuthorizationControllerPresentationContextProviding, ASAuthorizationControllerDelegate {
     
     func authorizationController(controller: ASAuthorizationController,
                                  didCompleteWithAuthorization authorization: ASAuthorization) {
@@ -34,4 +35,3 @@ class ASAuthorizationDataManager: NSObject, ASAuthorizationControllerPresentatio
         return UIApplication.shared.windows.first ?? UIWindow()
     }
 }
-

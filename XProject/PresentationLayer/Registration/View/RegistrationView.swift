@@ -6,9 +6,9 @@
 //  Copyright © 2020 Максим Локтев. All rights reserved.
 //
 
-import UIKit
-import SnapKit
 import AuthenticationServices
+import SnapKit
+import UIKit
 
 internal protocol RegistrationViewDelegate: class {
 
