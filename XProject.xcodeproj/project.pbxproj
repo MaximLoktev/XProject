@@ -12,6 +12,7 @@
 		F5314B3E2438BB5300D3BB79 /* XProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F5314B3C2438BB5300D3BB79 /* XProject.xcdatamodeld */; };
 		F5314B402438BB5400D3BB79 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5314B3F2438BB5400D3BB79 /* Assets.xcassets */; };
 		F5314B432438BB5400D3BB79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5314B412438BB5400D3BB79 /* LaunchScreen.storyboard */; };
+		F5370B9D243A706800520BFA /* fireworks.json in Resources */ = {isa = PBXBuildFile; fileRef = F5370B9C243A706800520BFA /* fireworks.json */; };
 		F5CA2C0D2438F30200CD3C1D /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CA2C0C2438F30200CD3C1D /* InputView.swift */; };
 		F5CA2C0F2438F34400CD3C1D /* CALayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CA2C0E2438F34400CD3C1D /* CALayer+Extensions.swift */; };
 		F5CA2C112438F39A00CD3C1D /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CA2C102438F39A00CD3C1D /* UIColor+Extensions.swift */; };
@@ -31,6 +32,7 @@
 		F5314B3F2438BB5400D3BB79 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5314B422438BB5400D3BB79 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F5314B442438BB5400D3BB79 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F5370B9C243A706800520BFA /* fireworks.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = fireworks.json; path = ../../../../../../Downloads/fireworks.json; sourceTree = "<group>"; };
 		F59DFEFB243908F500179EAA /* XProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XProject.entitlements; sourceTree = "<group>"; };
 		F5CA2C0C2438F30200CD3C1D /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		F5CA2C0E2438F34400CD3C1D /* CALayer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Extensions.swift"; sourceTree = "<group>"; };
@@ -92,6 +94,14 @@
 			path = XProject;
 			sourceTree = "<group>";
 		};
+		F55A9E9D243A68C800C9ABA3 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				F5370B9C243A706800520BFA /* fireworks.json */,
+			);
+			path = Animation;
+			sourceTree = "<group>";
+		};
 		F5ED0F022438DE9800405187 /* Root */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +147,7 @@
 		F5ED0F092438E30C00405187 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F55A9E9D243A68C800C9ABA3 /* Animation */,
 				F5314B3F2438BB5400D3BB79 /* Assets.xcassets */,
 				F5314B412438BB5400D3BB79 /* LaunchScreen.storyboard */,
 				F59DFEFB243908F500179EAA /* XProject.entitlements */,
@@ -258,6 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5314B432438BB5400D3BB79 /* LaunchScreen.storyboard in Resources */,
+				F5370B9D243A706800520BFA /* fireworks.json in Resources */,
 				F5314B402438BB5400D3BB79 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
