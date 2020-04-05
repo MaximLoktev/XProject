@@ -7,6 +7,7 @@
 //
 
 import AuthenticationServices
+import Lottie
 import SnapKit
 import UIKit
 
@@ -19,10 +20,12 @@ internal class RegistrationView: UIView {
     // MARK: - Properties
 
     weak var delegate: RegistrationViewDelegate?
+    
+    private let animationView: AnimationView = AnimationView()
 
     private let backgroundImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "bitmap")
+        imageView.image = #imageLiteral(resourceName: "background")
         imageView.contentMode = .scaleAspectFill
         
         return imageView
@@ -104,6 +107,8 @@ internal class RegistrationView: UIView {
         cardView.addSubview(peraImageView)
         cardView.addSubview(authButton)
         
+        setupAnimation()
+        
         makeConstraints()
     }
     
@@ -119,6 +124,15 @@ internal class RegistrationView: UIView {
         authorizationController.presentationContextProvider = dataManager
     }
     
+    private func setupAnimation() {
+        animationView.animation = Animation.named("fireworks")
+        animationView.contentMode = .scaleAspectFill
+        animationView.loopMode = .loop
+        animationView.animationSpeed = 0.8
+        animationView.play()
+        addSubview(animationView)
+    }
+    
     // MARK: - Actions
     
     @objc
@@ -129,6 +143,9 @@ internal class RegistrationView: UIView {
     // MARK: - Layout
     
     private func makeConstraints() {
+        animationView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         backgroundImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
