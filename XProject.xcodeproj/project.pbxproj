@@ -23,7 +23,6 @@
 		F5314B432438BB5400D3BB79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5314B412438BB5400D3BB79 /* LaunchScreen.storyboard */; };
 		F5370B9D243A706800520BFA /* fireworks.json in Resources */ = {isa = PBXBuildFile; fileRef = F5370B9C243A706800520BFA /* fireworks.json */; };
 		F586354A2440E1E600E11023 /* FillPersonalDataGenderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58635492440E1E600E11023 /* FillPersonalDataGenderCell.swift */; };
-		F586354C2440E2C400E11023 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F586354B2440E2C400E11023 /* User.swift */; };
 		F586354E2440E3BE00E11023 /* InsetPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F586354D2440E3BE00E11023 /* InsetPickerView.swift */; };
 		F58635502440E4E600E11023 /* FillPersonalDataImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F586354F2440E4E600E11023 /* FillPersonalDataImageCell.swift */; };
 		F5C19E2124450262006F1D7E /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C19E2024450262006F1D7E /* UIViewController+Extensions.swift */; };
@@ -58,7 +57,6 @@
 		F5314B442438BB5400D3BB79 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F5370B9C243A706800520BFA /* fireworks.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = fireworks.json; path = ../../../../../../Downloads/fireworks.json; sourceTree = "<group>"; };
 		F58635492440E1E600E11023 /* FillPersonalDataGenderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillPersonalDataGenderCell.swift; sourceTree = "<group>"; };
-		F586354B2440E2C400E11023 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F586354D2440E3BE00E11023 /* InsetPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetPickerView.swift; sourceTree = "<group>"; };
 		F586354F2440E4E600E11023 /* FillPersonalDataImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillPersonalDataImageCell.swift; sourceTree = "<group>"; };
 		F59DFEFB243908F500179EAA /* XProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XProject.entitlements; sourceTree = "<group>"; };
@@ -240,7 +238,6 @@
 		F5ED0F182438E46D00405187 /* ModelsLayer */ = {
 			isa = PBXGroup;
 			children = (
-				F586354B2440E2C400E11023 /* User.swift */,
 			);
 			path = ModelsLayer;
 			sourceTree = "<group>";
@@ -420,7 +417,6 @@
 				F5ED0F152438E3B700405187 /* RegistrationView.swift in Sources */,
 				F5ED0F052438DFD300405187 /* RootViewController.swift in Sources */,
 				F5CA2C132438FEE000CD3C1D /* ASAuthorizationDataManager.swift in Sources */,
-				F586354C2440E2C400E11023 /* User.swift in Sources */,
 				F5CA2C112438F39A00CD3C1D /* UIColor+Extensions.swift in Sources */,
 				F5CA2C0D2438F30200CD3C1D /* InputView.swift in Sources */,
 				F5CA2C0F2438F34400CD3C1D /* CALayer+Extensions.swift in Sources */,
