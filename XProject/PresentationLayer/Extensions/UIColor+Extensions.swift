@@ -18,4 +18,8 @@ extension UIColor {
                                              green: 44.0 / 255.0,
                                              blue: 46.0 / 255.0,
                                              alpha: 0.5)
+    static let twilightBlue: UIColor = UIColor(red: 15.0 / 255.0,
+                                               green: 76.0 / 255.0,
+                                               blue: 129.0 / 255.0,
+                                               alpha: 1.0)
 }

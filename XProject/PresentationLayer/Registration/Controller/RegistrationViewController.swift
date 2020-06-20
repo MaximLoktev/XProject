@@ -8,15 +8,15 @@
 
 import UIKit
 
-internal protocol RegistrationModuleOutput: class {
+protocol RegistrationModuleOutput: class {
 
 }
 
-internal protocol RegistrationModuleInput: class {
+protocol RegistrationModuleInput: class {
 
 }
 
-internal class RegistrationViewController: UIViewController, RegistrationModuleInput, RegistrationViewDelegate {
+class RegistrationViewController: UIViewController, RegistrationModuleInput, RegistrationViewDelegate {
 
     // MARK: - Properties
 
@@ -24,7 +24,7 @@ internal class RegistrationViewController: UIViewController, RegistrationModuleI
 
     var moduleView: RegistrationView!
     
-    private let dataManager: ASAuthorizationDataManager = ASAuthorizationDataManager()
+    private let dataManager = ASAuthorizationDataManager()
 
     // MARK: - View life cycle
 

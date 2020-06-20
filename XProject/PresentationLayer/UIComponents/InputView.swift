@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal class InputView: UIView {
+class InputView: UIView {
     
     // MARK: - Init
     

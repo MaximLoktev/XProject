@@ -9,7 +9,7 @@
 import AuthenticationServices
 import UIKit
 
-internal class ASAuthorizationDataManager: NSObject,
+class ASAuthorizationDataManager: NSObject,
 ASAuthorizationControllerPresentationContextProviding, ASAuthorizationControllerDelegate {
     
     func authorizationController(controller: ASAuthorizationController,
@@ -22,16 +22,19 @@ ASAuthorizationControllerPresentationContextProviding, ASAuthorizationController
             let fullName = appleIDCredential.fullName
             let email = appleIDCredential.email
             
+            print(userIdentifier, fullName!, email!)
+            
         default:
             break
         }
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        print("Error")
+        //print("Error")
     }
     
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        return UIApplication.shared.windows.first ?? UIWindow()
+        let present = UIApplication.shared.windows.first ?? UIWindow()
+        return present
     }
 }

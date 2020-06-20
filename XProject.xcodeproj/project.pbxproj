@@ -8,11 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		5A320F380E51C54B85C46CC5 /* Pods_XProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F97DDB8C27AAD0B054AD77B /* Pods_XProject.framework */; };
+		F52C4044243E70790026EBFA /* FillPersonalDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52C4041243E70790026EBFA /* FillPersonalDataViewController.swift */; };
+		F52C4046243E70790026EBFA /* FillPersonalDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52C4043243E70790026EBFA /* FillPersonalDataView.swift */; };
+		F52C4048243E776C0026EBFA /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52C4047243E776C0026EBFA /* UIButton+Extensions.swift */; };
+		F52C404A243E87F50026EBFA /* FillPersonalDataCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52C4049243E87F50026EBFA /* FillPersonalDataCollectionView.swift */; };
+		F52C404C243E88550026EBFA /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52C404B243E88550026EBFA /* UICollectionView+Extensions.swift */; };
+		F52C404E243E89640026EBFA /* FillPersonalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52C404D243E89630026EBFA /* FillPersonalDataManager.swift */; };
+		F52C4050244099050026EBFA /* FillPersonalDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52C404F244099050026EBFA /* FillPersonalDataCell.swift */; };
+		F52C405224409A9E0026EBFA /* FillPersonalDataNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52C405124409A9E0026EBFA /* FillPersonalDataNameCell.swift */; };
+		F52C405424409B970026EBFA /* InsetTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52C405324409B970026EBFA /* InsetTextField.swift */; };
 		F5314B342438BB5300D3BB79 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5314B332438BB5300D3BB79 /* AppDelegate.swift */; };
 		F5314B3E2438BB5300D3BB79 /* XProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F5314B3C2438BB5300D3BB79 /* XProject.xcdatamodeld */; };
 		F5314B402438BB5400D3BB79 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5314B3F2438BB5400D3BB79 /* Assets.xcassets */; };
 		F5314B432438BB5400D3BB79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5314B412438BB5400D3BB79 /* LaunchScreen.storyboard */; };
 		F5370B9D243A706800520BFA /* fireworks.json in Resources */ = {isa = PBXBuildFile; fileRef = F5370B9C243A706800520BFA /* fireworks.json */; };
+		F586354A2440E1E600E11023 /* FillPersonalDataGenderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58635492440E1E600E11023 /* FillPersonalDataGenderCell.swift */; };
+		F586354C2440E2C400E11023 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F586354B2440E2C400E11023 /* User.swift */; };
+		F586354E2440E3BE00E11023 /* InsetPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F586354D2440E3BE00E11023 /* InsetPickerView.swift */; };
+		F58635502440E4E600E11023 /* FillPersonalDataImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F586354F2440E4E600E11023 /* FillPersonalDataImageCell.swift */; };
+		F5C19E2124450262006F1D7E /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C19E2024450262006F1D7E /* UIViewController+Extensions.swift */; };
+		F5C19E232448C563006F1D7E /* LetterImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C19E222448C563006F1D7E /* LetterImageGenerator.swift */; };
 		F5CA2C0D2438F30200CD3C1D /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CA2C0C2438F30200CD3C1D /* InputView.swift */; };
 		F5CA2C0F2438F34400CD3C1D /* CALayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CA2C0E2438F34400CD3C1D /* CALayer+Extensions.swift */; };
 		F5CA2C112438F39A00CD3C1D /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CA2C102438F39A00CD3C1D /* UIColor+Extensions.swift */; };
@@ -26,6 +41,15 @@
 		3ABE5E03F81F1E953312B057 /* Pods-XProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XProject.debug.xcconfig"; path = "Target Support Files/Pods-XProject/Pods-XProject.debug.xcconfig"; sourceTree = "<group>"; };
 		4F97DDB8C27AAD0B054AD77B /* Pods_XProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A9FC9FB01390091CB4592F4 /* Pods-XProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XProject.release.xcconfig"; path = "Target Support Files/Pods-XProject/Pods-XProject.release.xcconfig"; sourceTree = "<group>"; };
+		F52C4041243E70790026EBFA /* FillPersonalDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillPersonalDataViewController.swift; sourceTree = "<group>"; };
+		F52C4043243E70790026EBFA /* FillPersonalDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillPersonalDataView.swift; sourceTree = "<group>"; };
+		F52C4047243E776C0026EBFA /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
+		F52C4049243E87F50026EBFA /* FillPersonalDataCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillPersonalDataCollectionView.swift; sourceTree = "<group>"; };
+		F52C404B243E88550026EBFA /* UICollectionView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extensions.swift"; sourceTree = "<group>"; };
+		F52C404D243E89630026EBFA /* FillPersonalDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillPersonalDataManager.swift; sourceTree = "<group>"; };
+		F52C404F244099050026EBFA /* FillPersonalDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillPersonalDataCell.swift; sourceTree = "<group>"; };
+		F52C405124409A9E0026EBFA /* FillPersonalDataNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillPersonalDataNameCell.swift; sourceTree = "<group>"; };
+		F52C405324409B970026EBFA /* InsetTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetTextField.swift; sourceTree = "<group>"; };
 		F5314B302438BB5300D3BB79 /* XProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5314B332438BB5300D3BB79 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F5314B3D2438BB5300D3BB79 /* XProject.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = XProject.xcdatamodel; sourceTree = "<group>"; };
@@ -33,7 +57,13 @@
 		F5314B422438BB5400D3BB79 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F5314B442438BB5400D3BB79 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F5370B9C243A706800520BFA /* fireworks.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = fireworks.json; path = ../../../../../../Downloads/fireworks.json; sourceTree = "<group>"; };
+		F58635492440E1E600E11023 /* FillPersonalDataGenderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillPersonalDataGenderCell.swift; sourceTree = "<group>"; };
+		F586354B2440E2C400E11023 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		F586354D2440E3BE00E11023 /* InsetPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetPickerView.swift; sourceTree = "<group>"; };
+		F586354F2440E4E600E11023 /* FillPersonalDataImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillPersonalDataImageCell.swift; sourceTree = "<group>"; };
 		F59DFEFB243908F500179EAA /* XProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XProject.entitlements; sourceTree = "<group>"; };
+		F5C19E2024450262006F1D7E /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		F5C19E222448C563006F1D7E /* LetterImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterImageGenerator.swift; sourceTree = "<group>"; };
 		F5CA2C0C2438F30200CD3C1D /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		F5CA2C0E2438F34400CD3C1D /* CALayer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Extensions.swift"; sourceTree = "<group>"; };
 		F5CA2C102438F39A00CD3C1D /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -62,6 +92,37 @@
 				6A9FC9FB01390091CB4592F4 /* Pods-XProject.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		F52C403E243E6FF60026EBFA /* FillPersonalData */ = {
+			isa = PBXGroup;
+			children = (
+				F52C403F243E703D0026EBFA /* View */,
+				F52C4040243E70450026EBFA /* Controller */,
+			);
+			path = FillPersonalData;
+			sourceTree = "<group>";
+		};
+		F52C403F243E703D0026EBFA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F52C4043243E70790026EBFA /* FillPersonalDataView.swift */,
+				F52C4049243E87F50026EBFA /* FillPersonalDataCollectionView.swift */,
+				F52C404F244099050026EBFA /* FillPersonalDataCell.swift */,
+				F52C405124409A9E0026EBFA /* FillPersonalDataNameCell.swift */,
+				F58635492440E1E600E11023 /* FillPersonalDataGenderCell.swift */,
+				F586354F2440E4E600E11023 /* FillPersonalDataImageCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F52C4040243E70450026EBFA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F52C4041243E70790026EBFA /* FillPersonalDataViewController.swift */,
+				F52C404D243E89630026EBFA /* FillPersonalDataManager.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		F5314B272438BB5300D3BB79 = {
@@ -164,6 +225,7 @@
 				F5ED0F192438E4C900405187 /* UIComponents */,
 				F5ED0F022438DE9800405187 /* Root */,
 				F5ED0F062438E17B00405187 /* Registration */,
+				F52C403E243E6FF60026EBFA /* FillPersonalData */,
 			);
 			path = PresentationLayer;
 			sourceTree = "<group>";
@@ -178,6 +240,7 @@
 		F5ED0F182438E46D00405187 /* ModelsLayer */ = {
 			isa = PBXGroup;
 			children = (
+				F586354B2440E2C400E11023 /* User.swift */,
 			);
 			path = ModelsLayer;
 			sourceTree = "<group>";
@@ -186,6 +249,9 @@
 			isa = PBXGroup;
 			children = (
 				F5CA2C0C2438F30200CD3C1D /* InputView.swift */,
+				F52C405324409B970026EBFA /* InsetTextField.swift */,
+				F586354D2440E3BE00E11023 /* InsetPickerView.swift */,
+				F5C19E222448C563006F1D7E /* LetterImageGenerator.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -195,6 +261,9 @@
 			children = (
 				F5CA2C0E2438F34400CD3C1D /* CALayer+Extensions.swift */,
 				F5CA2C102438F39A00CD3C1D /* UIColor+Extensions.swift */,
+				F52C4047243E776C0026EBFA /* UIButton+Extensions.swift */,
+				F52C404B243E88550026EBFA /* UICollectionView+Extensions.swift */,
+				F5C19E2024450262006F1D7E /* UIViewController+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -341,15 +410,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5C19E2124450262006F1D7E /* UIViewController+Extensions.swift in Sources */,
+				F52C405224409A9E0026EBFA /* FillPersonalDataNameCell.swift in Sources */,
+				F52C404C243E88550026EBFA /* UICollectionView+Extensions.swift in Sources */,
 				F5314B3E2438BB5300D3BB79 /* XProject.xcdatamodeld in Sources */,
+				F52C4048243E776C0026EBFA /* UIButton+Extensions.swift in Sources */,
+				F52C404A243E87F50026EBFA /* FillPersonalDataCollectionView.swift in Sources */,
+				F586354E2440E3BE00E11023 /* InsetPickerView.swift in Sources */,
 				F5ED0F152438E3B700405187 /* RegistrationView.swift in Sources */,
 				F5ED0F052438DFD300405187 /* RootViewController.swift in Sources */,
 				F5CA2C132438FEE000CD3C1D /* ASAuthorizationDataManager.swift in Sources */,
+				F586354C2440E2C400E11023 /* User.swift in Sources */,
 				F5CA2C112438F39A00CD3C1D /* UIColor+Extensions.swift in Sources */,
 				F5CA2C0D2438F30200CD3C1D /* InputView.swift in Sources */,
 				F5CA2C0F2438F34400CD3C1D /* CALayer+Extensions.swift in Sources */,
+				F52C4050244099050026EBFA /* FillPersonalDataCell.swift in Sources */,
 				F5314B342438BB5300D3BB79 /* AppDelegate.swift in Sources */,
+				F586354A2440E1E600E11023 /* FillPersonalDataGenderCell.swift in Sources */,
+				F52C4046243E70790026EBFA /* FillPersonalDataView.swift in Sources */,
+				F52C404E243E89640026EBFA /* FillPersonalDataManager.swift in Sources */,
+				F58635502440E4E600E11023 /* FillPersonalDataImageCell.swift in Sources */,
 				F5ED0F132438E3B700405187 /* RegistrationViewController.swift in Sources */,
+				F52C4044243E70790026EBFA /* FillPersonalDataViewController.swift in Sources */,
+				F52C405424409B970026EBFA /* InsetTextField.swift in Sources */,
+				F5C19E232448C563006F1D7E /* LetterImageGenerator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

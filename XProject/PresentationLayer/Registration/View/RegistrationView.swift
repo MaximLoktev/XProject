@@ -11,17 +11,17 @@ import Lottie
 import SnapKit
 import UIKit
 
-internal protocol RegistrationViewDelegate: class {
+protocol RegistrationViewDelegate: class {
 
 }
 
-internal class RegistrationView: UIView {
+class RegistrationView: UIView {
 
     // MARK: - Properties
 
     weak var delegate: RegistrationViewDelegate?
     
-    private let animationView: AnimationView = AnimationView()
+    private let animationView = AnimationView()
 
     private let backgroundImageView: UIImageView = {
         let imageView = UIImageView()

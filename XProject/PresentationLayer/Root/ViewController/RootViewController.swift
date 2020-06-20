@@ -9,11 +9,11 @@
 import AuthenticationServices
 import UIKit
 
-internal protocol RootModuleInput: class {
+protocol RootModuleInput: class {
     
 }
 
-internal class RootViewController: UITabBarController, RootModuleInput {
+class RootViewController: UITabBarController, RootModuleInput {
     
     // MARK: - View life cycle
     
@@ -28,7 +28,8 @@ internal class RootViewController: UITabBarController, RootModuleInput {
     // MARK: - RootControllerLogic
     
     private func startLoading() {
-        let viewController = RegistrationViewController()
+        //let viewController = RegistrationViewController()
+        let viewController = FillPersonalDataViewController()
         viewControllers = [viewController]
     }
 }
