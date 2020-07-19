@@ -24,8 +24,22 @@ class RegistrationViewController: UIViewController, RegistrationModuleInput, Reg
 
     var moduleView: RegistrationView!
     
-    private let dataManager = ASAuthorizationDataManager()
-
+    private let sessionManager: SessionManager
+    
+    private let dataManager: ASAuthorizationDataManager
+    
+    // MARK: - Init
+    
+    init(sessionManager: SessionManager) {
+        self.sessionManager = sessionManager
+        dataManager = ASAuthorizationDataManager(sessionManager: sessionManager)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - View life cycle
 
     override func loadView() {

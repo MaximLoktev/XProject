@@ -1,24 +1,28 @@
 PODS:
+  - KeychainAccess (4.1.0)
   - lottie-ios (3.1.6)
   - SnapKit (5.0.1)
   - SwiftLint (0.39.1)
 
 DEPENDENCIES:
+  - KeychainAccess
   - lottie-ios
   - SnapKit (~> 5.0.0)
   - SwiftLint
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - KeychainAccess
     - lottie-ios
     - SnapKit
     - SwiftLint
 
 SPEC CHECKSUMS:
+  KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
   lottie-ios: 85ce835dd8c53e02509f20729fc7d6a4e6645a0a
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftLint: 55e96a4a4d537d4a3156859fc1c54bd24851a046
 
-PODFILE CHECKSUM: 98957a3489ac159072212ba9ed23e794f7393a9a
+PODFILE CHECKSUM: 4ad4ea2bf66225fcf6d4fb8c205248f6deaca511
 
 COCOAPODS: 1.9.1

@@ -10,22 +10,18 @@ import UIKit
 
 class InsetPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    enum Gender: String {
-        case android = "Android"
-        case ios = "iOS"
-        case php = "PHP"
-    }
-    
     // MARK: - Properties
     
-    var genderLvl: Gender = .ios
+    var genderLvl: Gender = .defaults
     
-    private let pickerArray: [Gender] = [.android, .ios, .php]
+    private let pickerArray: [Gender] = [.defaults, .android, .ios, .php]
     
     // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        genderLvl = pickerArray[0]
         
         dataSource = self
         delegate = self
@@ -48,15 +44,11 @@ class InsetPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSourc
     // MARK: - UIPickerViewDelegate
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        pickerArray[row].rawValue
+        pickerArray[row].description
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let gender = pickerArray[row]
         genderLvl = gender
-    }
-    
-    override func selectedRow(inComponent component: Int) -> Int {
-        1
     }
 }

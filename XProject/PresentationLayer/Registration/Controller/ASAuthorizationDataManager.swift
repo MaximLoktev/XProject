@@ -10,7 +10,14 @@ import AuthenticationServices
 import UIKit
 
 class ASAuthorizationDataManager: NSObject,
-ASAuthorizationControllerPresentationContextProviding, ASAuthorizationControllerDelegate {
+    ASAuthorizationControllerPresentationContextProviding, ASAuthorizationControllerDelegate {
+    
+    var sessionManager: SessionManager
+    
+    init(sessionManager: SessionManager) {
+        self.sessionManager = sessionManager
+        sessionManager.storeToken(accessToken: "еуые")
+    }
     
     func authorizationController(controller: ASAuthorizationController,
                                  didCompleteWithAuthorization authorization: ASAuthorization) {
@@ -19,10 +26,12 @@ ASAuthorizationControllerPresentationContextProviding, ASAuthorizationController
             
             // Create an account in your system.
             let userIdentifier = appleIDCredential.user
-            let fullName = appleIDCredential.fullName
-            let email = appleIDCredential.email
+//            let fullName = appleIDCredential.fullName
+//            let email = appleIDCredential.email
+//            
+//            print(userIdentifier, fullName!, email!)
             
-            print(userIdentifier, fullName!, email!)
+            sessionManager.storeToken(accessToken: userIdentifier)
             
         default:
             break

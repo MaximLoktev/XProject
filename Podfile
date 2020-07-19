@@ -6,4 +6,6 @@ target 'XProject' do
     pod 'SnapKit', '~> 5.0.0'
     pod 'SwiftLint'
     pod 'lottie-ios'
+    pod 'KeychainAccess'
+    pod 'Firebase/Analytics'
 end

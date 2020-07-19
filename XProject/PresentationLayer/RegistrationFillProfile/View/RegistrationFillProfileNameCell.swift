@@ -1,15 +1,15 @@
 //
-//  FillPersonalDataNameCell.swift
+//  RegistrationFillProfileNameCell.swift
 //  XProject
 //
-//  Created by Максим Локтев on 10.04.2020.
+//  Created by Максим Локтев on 18.07.2020.
 //  Copyright © 2020 Максим Локтев. All rights reserved.
 //
 
 import SnapKit
 import UIKit
 
-class FillPersonalDataNameCell: FillPersonalDataCell {
+class RegistrationFillProfileNameCell: RegistrationFillProfileCell {
     
     // MARK: - Properties
     

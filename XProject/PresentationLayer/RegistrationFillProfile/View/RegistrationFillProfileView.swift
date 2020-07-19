@@ -1,25 +1,25 @@
 //
-//  FillPersonalDataView.swift
+//  RegistrationFillProfileView.swift
 //  XProject
 //
-//  Created by Максим Локтев on 08.04.2020.
+//  Created by Максим Локтев on 18.07.2020.
 //  Copyright © 2020 Максим Локтев. All rights reserved.
 //
 
 import SnapKit
 import UIKit
 
-protocol FillPersonalDataViewDelegate: class {
-    func viewDidTapNextButton(_ view: FillPersonalDataView)
+protocol RegistrationFillProfileViewDelegate: class {
+    func viewDidTapNextButton(_ view: RegistrationFillProfileView, content: RegistrationFillProfileDataFlow.Content)
 }
 
-class FillPersonalDataView: UIView {
+class RegistrationFillProfileView: UIView {
 
     // MARK: - Properties
 
-    weak var delegate: FillPersonalDataViewDelegate?
-    
-    let collectionView = FillPersonalDataCollectionView()
+    weak var delegate: RegistrationFillProfileViewDelegate?
+
+    private let collectionView = RegistrationFillProfileCollectionView()
     
     private let backgroundImageView: UIImageView = {
         let imageView = UIImageView()
@@ -89,31 +89,58 @@ class FillPersonalDataView: UIView {
     }
     
     // MARK: - Setup
+
+    func setupLoad(viewModel: RegistrationFillProfileDataFlow.Load.ViewModel) {
+
+    }
     
     func setupDataManager(dataManager: UICollectionViewDataSource & UICollectionViewDelegate) {
         collectionView.delegate = dataManager
         collectionView.dataSource = dataManager
+        reloadData()
+    }
+    
+    func reloadData() {
         collectionView.reloadData()
     }
     
-    func setupPage(with page: Int) {
-        pageControll.currentPage = page
-    }
-    
     func setupPage(with page: Int, title: String) {
-        setupPage(with: page)
+        pageControll.currentPage = page
         nextButton.setTitle(title, for: .normal)
     }
     
-    func setupNewPage(page: Int) {
+    func scroll(to page: Int) {
         collectionView.scrollToItem(at: IndexPath(item: page, section: 0), at: .right, animated: true)
     }
     
     // MARK: - Actions
-    
+
     @objc
     private func nextButtonAction(_ sender: UIButton) {
-        delegate?.viewDidTapNextButton(self)
+        guard let content = getContentFromCell() else {
+            return
+        }
+        delegate?.viewDidTapNextButton(self, content: content)
+    }
+    
+    private func getContentFromCell() -> RegistrationFillProfileDataFlow.Content? {
+        guard let cell = collectionView.visibleCells.first else {
+            return nil
+        }
+        
+        let content: RegistrationFillProfileDataFlow.Content?
+        
+        if let cell = cell as? RegistrationFillProfileNameCell {
+            content = .name(cell.name)
+        } else if let cell = cell as? RegistrationFillProfileGenderCell {
+            content = .gender(cell.genderPicker.genderLvl)
+        } else if let cell = cell as? RegistrationFillProfileImageCell {
+            content = .image(cell.imageUrl)
+        } else {
+            content = nil
+        }
+        
+        return content
     }
     
     // MARK: - Layout
@@ -149,3 +176,4 @@ class FillPersonalDataView: UIView {
         }
     }
 }
+    

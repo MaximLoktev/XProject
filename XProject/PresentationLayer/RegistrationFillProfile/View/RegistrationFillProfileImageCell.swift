@@ -1,17 +1,19 @@
 //
-//  FillPersonalDataImageCell.swift
+//  RegistrationFillProfileImageCell.swift
 //  XProject
 //
-//  Created by Максим Локтев on 10.04.2020.
+//  Created by Максим Локтев on 18.07.2020.
 //  Copyright © 2020 Максим Локтев. All rights reserved.
 //
 
 import SnapKit
 import UIKit
 
-class FillPersonalDataImageCell: FillPersonalDataCell {
+class RegistrationFillProfileImageCell: RegistrationFillProfileCell {
     
     // MARK: - Properties
+    
+    var imageUrl: URL?
     
     let photoImageView: UIImageView = {
         let image = UIImageView()
@@ -44,13 +46,15 @@ class FillPersonalDataImageCell: FillPersonalDataCell {
     
     // MARK: - Setup
     
-    func setupCell(title: String, image: UIImage?) {
-        photoImageView.image = image
+    func setupCell(title: String, imageURL: URL?) {
+        guard
+            let imageUrl = imageURL,
+            let imageData = try? Data(contentsOf: imageUrl)
+        else {
+            return
+        }
+        photoImageView.image = UIImage(data: imageData)
         titleLabel.text = title
-    }
-    
-    func setupImagePhoto() {
-        
     }
     
     // MARK: - Actions

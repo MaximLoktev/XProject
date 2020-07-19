@@ -1,15 +1,15 @@
 //
-//  FillPersonalGenderDataCell.swift
+//  RegistrationFillProfileGenderCell.swift
 //  XProject
 //
-//  Created by Максим Локтев on 10.04.2020.
+//  Created by Максим Локтев on 18.07.2020.
 //  Copyright © 2020 Максим Локтев. All rights reserved.
 //
 
 import SnapKit
 import UIKit
 
-class FillPersonalDataGenderCell: FillPersonalDataCell {
+class RegistrationFillProfileGenderCell: RegistrationFillProfileCell {
     
     // MARK: - Properties
     
@@ -36,6 +36,7 @@ class FillPersonalDataGenderCell: FillPersonalDataCell {
     func setupCell(title: String, gender: Gender) {
         titleLabel.text = title
         genderPicker.genderLvl = gender
+        genderPicker.selectRow(gender.rawValue, inComponent: 0, animated: true)
     }
     
     // MARK: - Layout

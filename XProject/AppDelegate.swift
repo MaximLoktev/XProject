@@ -13,11 +13,13 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    private let appDependency: RootDependency = AppDependency()
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        let rootViewController = RootViewController()
+        let rootViewController = RootViewController(appDependency: appDependency)
         let window = UIWindow()
         window.rootViewController = rootViewController
         window.makeKeyAndVisible()
