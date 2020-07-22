@@ -6,9 +6,12 @@
 //  Copyright © 2020 Максим Локтев. All rights reserved.
 //
 
+import FirebaseStorage
 import UIKit
 
 class LetterImageGenerator: NSObject {
+    
+    static let userImageKay = "userImageKey.png"
     
     class func imageWith(name: String?) -> UIImage? {
         let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
@@ -44,13 +47,11 @@ class LetterImageGenerator: NSObject {
     
     class func storeImage(image: UIImage?) -> URL? {
         
-        let userImageKay = "userImageKay"
-        
         if let pngRepresentation = image?.pngData() {
             if let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-                let fileURL = path.appendingPathComponent(userImageKay + ".png")
+                let fileURL = path.appendingPathComponent(userImageKay)
                 do {
-                    try pngRepresentation.write(to: fileURL, options: .atomic)
+                    try pngRepresentation.write(to: fileURL)
                 } catch {
                     _ = error.localizedDescription
                 }
@@ -58,5 +59,22 @@ class LetterImageGenerator: NSObject {
             }
         }
         return nil
+    }
+    
+    class func saveImageInFirebase(imageURL: URL?) {
+        let storageRef = Storage.storage().reference()
+        let imagesRef = storageRef.child("images")
+        let spaceRef = imagesRef.child(userImageKay)
+        
+        guard let localFile = imageURL else {
+            return
+        }
+        spaceRef.putFile(from: localFile, metadata: nil) { metadata, error in
+            guard let metadata = metadata else {
+                _ = error?.localizedDescription
+                return
+            }
+            print(metadata)
+        }
     }
 }

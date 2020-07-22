@@ -6,7 +6,7 @@
 //  Copyright © 2020 Максим Локтев. All rights reserved.
 //
 
-import CoreData
+import Firebase
 import UIKit
 
 @UIApplicationMain
@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.makeKeyAndVisible()
         
         self.window = window
+        FirebaseApp.configure()
         
         return true
     }

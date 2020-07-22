@@ -79,6 +79,8 @@ class RegistrationFillProfileView: UIView {
         cardView.addSubview(nextButton)
         cardView.addSubview(pageControll)
         
+        //collectionView.sc
+        
         nextButton.addTarget(self, action: #selector(nextButtonAction(_:)), for: .touchUpInside)
         
         makeConstraints()
@@ -128,7 +130,7 @@ class RegistrationFillProfileView: UIView {
             return nil
         }
         
-        let content: RegistrationFillProfileDataFlow.Content?
+        var content: RegistrationFillProfileDataFlow.Content?
         
         if let cell = cell as? RegistrationFillProfileNameCell {
             content = .name(cell.name)
@@ -136,8 +138,6 @@ class RegistrationFillProfileView: UIView {
             content = .gender(cell.genderPicker.genderLvl)
         } else if let cell = cell as? RegistrationFillProfileImageCell {
             content = .image(cell.imageUrl)
-        } else {
-            content = nil
         }
         
         return content

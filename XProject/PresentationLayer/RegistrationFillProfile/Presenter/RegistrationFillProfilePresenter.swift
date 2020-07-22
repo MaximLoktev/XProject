@@ -14,6 +14,7 @@ internal protocol RegistrationFillProfilePresentationLogic {
     func presentCreateNamedImage(response: RegistrationFillProfileDataFlow.CreateNamedImage.Response)
     func presentSelectPage(response: RegistrationFillProfileDataFlow.SelectPage.Response)
     func presentAddUserImage(response: RegistrationFillProfileDataFlow.AddUserImage.Response)
+    func presentSaveUserInFirebase(response: RegistrationFillProfileDataFlow.SaveUserInFirebase.Response)
 }
 
 internal class RegistrationFillProfilePresenter: RegistrationFillProfilePresentationLogic {
@@ -37,19 +38,18 @@ internal class RegistrationFillProfilePresenter: RegistrationFillProfilePresenta
         case let .success(userModel, page):
             let items = makeItems(userModel: userModel)
             let isLastPage: Bool = page > items.count - 1
+            let currentPage = isLastPage ? items.count - 1 : page
             
             var isNameFilled = false
             if case .name = items[page - 1].content, userModel.image == nil {
                 isNameFilled = true
             }
-            let buttonTitle = items[page].buttonTitle
-            let content = RegistrationFillProfileDataFlow.PageContent(
-                items: items,
-                page: page,
-                isLastPage: isLastPage,
-                isNameFilled: isNameFilled,
-                buttonTitle: buttonTitle
-            )
+            let buttonTitle = items[currentPage].buttonTitle
+            let content = RegistrationFillProfileDataFlow.PageContent(items: items,
+                                                                      page: page,
+                                                                      isLastPage: isLastPage,
+                                                                      isNameFilled: isNameFilled,
+                                                                      buttonTitle: buttonTitle)
             viewModel = .success(content: content)
         case .failure:
             viewModel = .failure(title: "Ошибка", description: "Не удалось загрузить следующую страницу!")
@@ -91,6 +91,18 @@ internal class RegistrationFillProfilePresenter: RegistrationFillProfilePresenta
             viewModel = .failure(title: "Ошибка", description: "Не удалось создать изображение!")
         }
         viewController?.displayAddUserImage(viewModel: viewModel)
+    }
+    
+    func presentSaveUserInFirebase(response: RegistrationFillProfileDataFlow.SaveUserInFirebase.Response) {
+        let viewModel: RegistrationFillProfileDataFlow.SaveUserInFirebase.ViewModel
+        
+        switch response.result {
+        case .success:
+            viewModel = .success
+        case .failure:
+            viewModel = .failure(title: "Ошибка", description: "Не удалось сохранить пользователя!")
+        }
+        viewController?.displaySaveUserInFirebase(viewModel: viewModel)
     }
     
     private func makeItems(userModel: UserModel?) -> [RegistrationFillProfileDataFlow.Item] {

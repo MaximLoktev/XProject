@@ -107,4 +107,18 @@ internal enum RegistrationFillProfileDataFlow {
             case failure(title: String, description: String)
         }
     }
+    
+    enum SaveUserInFirebase {
+        
+        struct Request { }
+        
+        struct Response {
+            let result: Result<UserModel, APIError>
+        }
+        
+        enum ViewModel {
+            case success
+            case failure(title: String, description: String)
+        }
+    }
 }

@@ -6,6 +6,8 @@
 //  Copyright © 2020 Максим Локтев. All rights reserved.
 //
 
+import FirebaseDatabase
+import FirebaseStorage
 import Foundation
 
 internal protocol RegistrationFillProfileBusinessLogic {
@@ -14,6 +16,7 @@ internal protocol RegistrationFillProfileBusinessLogic {
     func createNamedImage(request: RegistrationFillProfileDataFlow.CreateNamedImage.Request)
     func selectPage(request: RegistrationFillProfileDataFlow.SelectPage.Request)
     func addUserImage(request: RegistrationFillProfileDataFlow.AddUserImage.Request)
+    func saveUserInFirebase(request: RegistrationFillProfileDataFlow.SaveUserInFirebase.Request)
 }
 
 internal class RegistrationFillProfileInteractor: RegistrationFillProfileBusinessLogic {
@@ -24,6 +27,7 @@ internal class RegistrationFillProfileInteractor: RegistrationFillProfileBusines
     
     private var userModel: UserModel?
     private var currentPage = 0
+    var ref: DatabaseReference!
     
     private let fileDataStorageService: FileDataStorageService
     
@@ -82,6 +86,7 @@ internal class RegistrationFillProfileInteractor: RegistrationFillProfileBusines
     func createNamedImage(request: RegistrationFillProfileDataFlow.CreateNamedImage.Request) {
         let image = LetterImageGenerator.imageWith(name: userModel?.name)
         let imageURL = LetterImageGenerator.storeImage(image: image)
+        LetterImageGenerator.saveImageInFirebase(imageURL: imageURL)
         userModel?.image = imageURL
         
         guard let userModel = userModel else {
@@ -107,6 +112,7 @@ internal class RegistrationFillProfileInteractor: RegistrationFillProfileBusines
     
     func addUserImage(request: RegistrationFillProfileDataFlow.AddUserImage.Request) {
         let imageURL = LetterImageGenerator.storeImage(image: request.image)
+        LetterImageGenerator.saveImageInFirebase(imageURL: imageURL)
         userModel?.image = imageURL
         
         guard let userModel = userModel else {
@@ -118,21 +124,22 @@ internal class RegistrationFillProfileInteractor: RegistrationFillProfileBusines
             self?.presenter?.presentAddUserImage(response: response)
         }
     }
-//
-//let imageURL = LetterImageGenerator.storeImage(image: image)
-//userModel.image = imageURL
-//
-//fileDataStorageService.writingData(user: userModel) { [weak self] result in
-//    guard let self = self else {
-//        return
-//    }
-//    switch result {
-//    case .success(let user):
-//        userModel = user
-//        self.dataManager.items = self.makeItems(image: image)
-//        self.moduleView.collectionView.reloadData()
-//    case .failure(let error):
-//        _ = error.localizedDescription
-//    }
-//}
+    
+    func saveUserInFirebase(request: RegistrationFillProfileDataFlow.SaveUserInFirebase.Request) {
+        fileDataStorageService.readingData { [weak self] result in
+            guard let self = self else {
+                return
+            }
+            switch result {
+            case.success(let userModel):
+                self.userModel = userModel
+                self.ref = Database.database().reference(withPath: "users").child("user")
+                self.ref.setValue(self.userModel?.convertToDictionary())
+            case.failure:
+                break
+            }
+            let response = RegistrationFillProfileDataFlow.SaveUserInFirebase.Response(result: result)
+            self.presenter?.presentSaveUserInFirebase(response: response)
+        }
+    }
 }

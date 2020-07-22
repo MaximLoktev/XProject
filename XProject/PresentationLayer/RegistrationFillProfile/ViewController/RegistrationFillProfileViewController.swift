@@ -14,6 +14,7 @@ internal protocol RegistrationFillProfileControllerLogic: class {
     func displayCreateNamedImage(viewModel: RegistrationFillProfileDataFlow.CreateNamedImage.ViewModel)
     func displaySelectPage(viewModel: RegistrationFillProfileDataFlow.SelectPage.ViewModel)
     func displayAddUserImage(viewModel: RegistrationFillProfileDataFlow.AddUserImage.ViewModel)
+    func displaySaveUserInFirebase(viewModel: RegistrationFillProfileDataFlow.SaveUserInFirebase.ViewModel)
 }
 
 internal protocol RegistrationFillProfileModuleOutput: class {
@@ -81,16 +82,19 @@ internal class RegistrationFillProfileViewController: UIViewController,
             }
             
             if content.isLastPage {
-                moduleOutput?.registrationFillProfileModuleDidShowNewsFeet()
+                let request = RegistrationFillProfileDataFlow.SaveUserInFirebase.Request()
+                interactor?.saveUserInFirebase(request: request)
             }
         case let .failure(title, description):
-            break
+            let alert = AlertWindowController.alert(title: title, message: description, cancel: "Ok")
+            alert.show()
         }
     }
     
     func displayCreateNamedImage(viewModel: RegistrationFillProfileDataFlow.CreateNamedImage.ViewModel) {
         if case let .failure(title, description) = viewModel {
-            
+            let alert = AlertWindowController.alert(title: title, message: description, cancel: "Ok")
+            alert.show()
         }
     }
     
@@ -107,8 +111,17 @@ internal class RegistrationFillProfileViewController: UIViewController,
             dataManager.items = items
             moduleView.reloadData()
         case let .failure(title, description):
-            break
+            let alert = AlertWindowController.alert(title: title, message: description, cancel: "Ok")
+            alert.show()
         }
+    }
+    
+    func displaySaveUserInFirebase(viewModel: RegistrationFillProfileDataFlow.SaveUserInFirebase.ViewModel) {
+        if case let .failure(title, description) = viewModel {
+            let alert = AlertWindowController.alert(title: title, message: description, cancel: "Ok")
+            alert.show()
+        }
+        moduleOutput?.registrationFillProfileModuleDidShowNewsFeet()
     }
     
     // MARK: - RegistrationFillProfileViewDelegate
@@ -171,7 +184,6 @@ internal class RegistrationFillProfileViewController: UIViewController,
             let alert = AlertWindowController.changePhotoAlert { sourceType in
                 self?.setupPicker(sourceType: sourceType)
             }
-
             alert.show()
         }
     }

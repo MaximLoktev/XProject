@@ -1,5 +1,5 @@
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '10.0'
+platform :ios, '13.4'
 use_frameworks!
 
 target 'XProject' do
@@ -7,5 +7,9 @@ target 'XProject' do
     pod 'SwiftLint'
     pod 'lottie-ios'
     pod 'KeychainAccess'
-    pod 'Firebase/Analytics'
+    pod 'Firebase/Core'
+    pod 'Firebase/Auth'
+    pod 'Firebase/Database'
+    pod 'Firebase/Storage'
+    
 end

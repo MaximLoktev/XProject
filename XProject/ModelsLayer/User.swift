@@ -32,4 +32,8 @@ struct UserModel: Codable {
     var name: String
     var gender: Gender
     var image: URL?
+    
+    func convertToDictionary() -> Any {
+        ["name": name, "gender": gender.description]
+    }
 }

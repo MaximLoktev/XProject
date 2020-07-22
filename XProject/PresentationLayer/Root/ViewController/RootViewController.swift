@@ -53,10 +53,7 @@ class RootViewController: UITabBarController, RootModuleInput, RegistrationModul
         if haveUser {
             setupMainControllers()
         } else if haveSession {
-//            let viewController =
-//                FillPersonalDataViewController(fileDataStorageService: appDependency.fileDataStorageService)
             let viewController = appDependency.registrationFillProfileBuilder.build(withModuleOutput: self)
-            //viewController.moduleOutput = self
             viewControllers = [viewController]
         } else {
             let viewController = RegistrationViewController(sessionManager: appDependency.sessionManager)
