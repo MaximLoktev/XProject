@@ -17,6 +17,8 @@ class RegistrationFillProfileNameCell: RegistrationFillProfileCell {
         textField.text ?? ""
     }
     
+    var textFieldDidEditing: ((String) -> Void)?
+    
     private let textField: InsetTextField = {
         let textField = InsetTextField()
         textField.font = .systemFont(ofSize: 17.0)
@@ -41,6 +43,8 @@ class RegistrationFillProfileNameCell: RegistrationFillProfileCell {
         
         addSubview(textField)
         
+        textField.addTarget(self, action: #selector(titleTextFieldDidChange(_:)), for: .editingChanged)
+        
         makeConstraints()
     }
     
@@ -55,11 +59,18 @@ class RegistrationFillProfileNameCell: RegistrationFillProfileCell {
         textField.text = name
     }
     
+    // MARK: - Actions
+    
+    @objc
+    private func titleTextFieldDidChange(_ sender: UITextField) {
+        textFieldDidEditing?(sender.text ?? "")
+    }
+    
     // MARK: - Layout
     
     private func makeConstraints() {
         textField.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(20.0)
+            make.top.equalTo(titleLabel.snp.bottom).offset(18.0)
             make.left.equalTo(titleLabel.snp.left)
             make.right.equalTo(titleLabel.snp.right)
             make.height.equalTo(44.0)

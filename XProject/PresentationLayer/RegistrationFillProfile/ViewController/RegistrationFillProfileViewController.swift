@@ -10,11 +10,14 @@ import UIKit
 
 internal protocol RegistrationFillProfileControllerLogic: class {
     func displayLoad(viewModel: RegistrationFillProfileDataFlow.Load.ViewModel)
+    func displayScrollTableViewIfNeeded(viewModel: RegistrationFillProfileDataFlow.ScrollTableViewIfNeeded.ViewModel)
     func displayNextPage(viewModel: RegistrationFillProfileDataFlow.NextPage.ViewModel)
     func displayCreateNamedImage(viewModel: RegistrationFillProfileDataFlow.CreateNamedImage.ViewModel)
     func displaySelectPage(viewModel: RegistrationFillProfileDataFlow.SelectPage.ViewModel)
     func displayAddUserImage(viewModel: RegistrationFillProfileDataFlow.AddUserImage.ViewModel)
     func displaySaveUserInFirebase(viewModel: RegistrationFillProfileDataFlow.SaveUserInFirebase.ViewModel)
+    func displayEnterUserName(viewModel: RegistrationFillProfileDataFlow.EnterUserName.ViewModel)
+    func displayGenderDidSelected(viewModel: RegistrationFillProfileDataFlow.GenderDidSelected.ViewModel)
 }
 
 internal protocol RegistrationFillProfileModuleOutput: class {
@@ -54,12 +57,23 @@ internal class RegistrationFillProfileViewController: UIViewController,
         addObservers()
         hideKeyboardWhenTappedAround()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        scrollTableViewIfNeeded()
+    }
 
     // MARK: - RegistrationFillProfileControllerLogic
 
     private func startLoading() {
         let request = RegistrationFillProfileDataFlow.Load.Request()
         interactor?.load(request: request)
+    }
+    
+    private func scrollTableViewIfNeeded() {
+        let request = RegistrationFillProfileDataFlow.ScrollTableViewIfNeeded.Request()
+        interactor?.scrollTableViewIfNeeded(request: request)
     }
 
     func displayLoad(viewModel: RegistrationFillProfileDataFlow.Load.ViewModel) {
@@ -68,12 +82,18 @@ internal class RegistrationFillProfileViewController: UIViewController,
         moduleView.setupLoad(viewModel: viewModel)
     }
     
+    func displayScrollTableViewIfNeeded(viewModel: RegistrationFillProfileDataFlow.ScrollTableViewIfNeeded.ViewModel) {
+        moduleView.setupPage(with: viewModel.index, title: viewModel.buttonTitle)
+        dataManager.currentPage = viewModel.index
+        moduleView.scroll(to: viewModel.index, animated: false)
+    }
+    
     func displayNextPage(viewModel: RegistrationFillProfileDataFlow.NextPage.ViewModel) {
         switch viewModel {
         case .success(let content):
             dataManager.items = content.items
+            dataManager.currentPage = content.page
             moduleView.reloadData()
-            moduleView.scroll(to: content.page)
             moduleView.setupPage(with: content.page, title: content.buttonTitle)
             
             if content.isNameFilled {
@@ -84,6 +104,8 @@ internal class RegistrationFillProfileViewController: UIViewController,
             if content.isLastPage {
                 let request = RegistrationFillProfileDataFlow.SaveUserInFirebase.Request()
                 interactor?.saveUserInFirebase(request: request)
+            } else {
+                moduleView.scroll(to: content.page, animated: true)
             }
         case let .failure(title, description):
             let alert = AlertWindowController.alert(title: title, message: description, cancel: "Ok")
@@ -122,6 +144,14 @@ internal class RegistrationFillProfileViewController: UIViewController,
             alert.show()
         }
         moduleOutput?.registrationFillProfileModuleDidShowNewsFeet()
+    }
+    
+    func displayEnterUserName(viewModel: RegistrationFillProfileDataFlow.EnterUserName.ViewModel) {
+        moduleView.setupNameError(isErrorShow: viewModel.isWarningShow, textError: viewModel.textError)
+    }
+    
+    func displayGenderDidSelected(viewModel: RegistrationFillProfileDataFlow.GenderDidSelected.ViewModel) {
+        moduleView.setupNameError(isErrorShow: viewModel.isWarningShow, textError: viewModel.textError)
     }
     
     // MARK: - RegistrationFillProfileViewDelegate
@@ -185,6 +215,16 @@ internal class RegistrationFillProfileViewController: UIViewController,
                 self?.setupPicker(sourceType: sourceType)
             }
             alert.show()
+        }
+        
+        dataManager.textFieldDidEditing = { [weak self] text in
+            let request = RegistrationFillProfileDataFlow.EnterUserName.Request(text: text)
+            self?.interactor?.enterUserName(request: request)
+        }
+        
+        dataManager.genderDidSelected = { [weak self] gender in
+            let request = RegistrationFillProfileDataFlow.GenderDidSelected.Request(gender: gender)
+            self?.interactor?.genderDidSelected(request: request)
         }
     }
 }

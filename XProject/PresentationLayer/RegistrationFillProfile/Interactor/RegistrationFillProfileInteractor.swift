@@ -12,11 +12,14 @@ import Foundation
 
 internal protocol RegistrationFillProfileBusinessLogic {
     func load(request: RegistrationFillProfileDataFlow.Load.Request)
+    func scrollTableViewIfNeeded(request: RegistrationFillProfileDataFlow.ScrollTableViewIfNeeded.Request)
     func nextPage(request: RegistrationFillProfileDataFlow.NextPage.Request)
     func createNamedImage(request: RegistrationFillProfileDataFlow.CreateNamedImage.Request)
     func selectPage(request: RegistrationFillProfileDataFlow.SelectPage.Request)
     func addUserImage(request: RegistrationFillProfileDataFlow.AddUserImage.Request)
     func saveUserInFirebase(request: RegistrationFillProfileDataFlow.SaveUserInFirebase.Request)
+    func enterUserName(request: RegistrationFillProfileDataFlow.EnterUserName.Request)
+    func genderDidSelected(request: RegistrationFillProfileDataFlow.GenderDidSelected.Request)
 }
 
 internal class RegistrationFillProfileInteractor: RegistrationFillProfileBusinessLogic {
@@ -26,15 +29,19 @@ internal class RegistrationFillProfileInteractor: RegistrationFillProfileBusines
     var presenter: RegistrationFillProfilePresentationLogic?
     
     private var userModel: UserModel?
+    private var coreData = CoreData()
     private var currentPage = 0
-    var ref: DatabaseReference!
+    private let userImageName = "userImageKey.png"
     
+    private var ref: DatabaseReference = DatabaseReference()
     private let fileDataStorageService: FileDataStorageService
+    private let profilleCoreDataService: ProfileCoreDataService
     
     // MARK: - Init
     
-    init(fileDataStorageService: FileDataStorageService) {
+    init(fileDataStorageService: FileDataStorageService, profilleCoreDataService: ProfileCoreDataService) {
         self.fileDataStorageService = fileDataStorageService
+        self.profilleCoreDataService = profilleCoreDataService
     }
     
     // MARK: - RegistrationFillProfileBusinessLogic
@@ -45,10 +52,42 @@ internal class RegistrationFillProfileInteractor: RegistrationFillProfileBusines
             case.success(let user):
                 self?.userModel = user
             case.failure:
-                self?.userModel = UserModel(name: "", gender: .defaults, image: nil)
+                self?.userModel = UserModel(name: "", gender: .defaults)
             }
             let response = RegistrationFillProfileDataFlow.Load.Response(userModel: self?.userModel)
             self?.presenter?.presentLoad(response: response)
+        }
+    }
+    
+    func scrollTableViewIfNeeded(request: RegistrationFillProfileDataFlow.ScrollTableViewIfNeeded.Request) {
+        
+        fileDataStorageService.readingData { [weak self] result in
+            guard let self = self, let userModel = self.userModel else {
+                return
+            }
+            
+            switch result {
+            case.success(let user):
+                self.userModel = user
+            case.failure(let error):
+                _ = error.localizedDescription
+            }
+            
+            let index: Int
+            if !userModel.name.isEmpty {
+                if userModel.gender != .defaults {
+                    index = 2
+                } else {
+                    index = 1
+                }
+            } else {
+                index = 0
+            }
+            self.currentPage = index
+            
+            let response = RegistrationFillProfileDataFlow.ScrollTableViewIfNeeded.Response(userModel: userModel,
+                                                                                            index: index)
+            self.presenter?.presentScrollTableViewIfNeeded(response: response)
         }
     }
     
@@ -58,8 +97,8 @@ internal class RegistrationFillProfileInteractor: RegistrationFillProfileBusines
             userModel?.name = value
         case .gender(let value):
             userModel?.gender = value
-        case .image(let value):
-            userModel?.image = value
+        case .image:
+            break
         }
         currentPage += 1
         
@@ -85,9 +124,7 @@ internal class RegistrationFillProfileInteractor: RegistrationFillProfileBusines
     
     func createNamedImage(request: RegistrationFillProfileDataFlow.CreateNamedImage.Request) {
         let image = LetterImageGenerator.imageWith(name: userModel?.name)
-        let imageURL = LetterImageGenerator.storeImage(image: image)
-        LetterImageGenerator.saveImageInFirebase(imageURL: imageURL)
-        userModel?.image = imageURL
+        LetterImageGenerator.storeImage(image: image, name: userImageName)
         
         guard let userModel = userModel else {
             return
@@ -111,9 +148,7 @@ internal class RegistrationFillProfileInteractor: RegistrationFillProfileBusines
     }
     
     func addUserImage(request: RegistrationFillProfileDataFlow.AddUserImage.Request) {
-        let imageURL = LetterImageGenerator.storeImage(image: request.image)
-        LetterImageGenerator.saveImageInFirebase(imageURL: imageURL)
-        userModel?.image = imageURL
+        LetterImageGenerator.storeImage(image: request.image, name: userImageName)
         
         guard let userModel = userModel else {
             return
@@ -126,20 +161,81 @@ internal class RegistrationFillProfileInteractor: RegistrationFillProfileBusines
     }
     
     func saveUserInFirebase(request: RegistrationFillProfileDataFlow.SaveUserInFirebase.Request) {
-        fileDataStorageService.readingData { [weak self] result in
-            guard let self = self else {
+        let saveUserGroup = DispatchGroup()
+        let saveUserQueue = DispatchQueue(label: "saveUserQueue")
+        var localUserModel: UserModel?
+        
+        saveUserQueue.async {
+            saveUserGroup.enter()
+            self.fileDataStorageService.readingData { result in
+                switch result {
+                case.success(let userModel):
+                    localUserModel = userModel
+                case .failure(let error):
+                    _ = error.localizedDescription
+                }
+                saveUserGroup.leave()
+            }
+        }
+        
+        saveUserGroup.wait()
+        
+        LetterImageGenerator.saveImageInFirebase(imageName: userImageName) { [weak self] result in
+            guard let self = self, let userModel = localUserModel else {
                 return
             }
             switch result {
-            case.success(let userModel):
-                self.userModel = userModel
+            case .success(let imageUrl):
                 self.ref = Database.database().reference(withPath: "users").child("user")
-                self.ref.setValue(self.userModel?.convertToDictionary())
-            case.failure:
-                break
+                self.ref.setValue(self.userModel?.convertToDictionary(imageUrl: imageUrl)) { _, _ in
+                    let profilleModel = ProfilleModel(name: userModel.name,
+                                                      gender: userModel.gender,
+                                                      imageURL: imageUrl)
+                    
+                    self.profilleCoreDataService.createUser(model: profilleModel, completion: { result in
+                        let presenterResponse: RegistrationFillProfileDataFlow.SaveUserInFirebase.Response
+                        switch result {
+                        case.success(let profilleModel):
+                            presenterResponse =
+                                RegistrationFillProfileDataFlow.SaveUserInFirebase.Response(
+                                    result: .success(profilleModel))
+                        case .failure(let error):
+                            presenterResponse =
+                                RegistrationFillProfileDataFlow.SaveUserInFirebase.Response(result: .failure(error))
+                        }
+                        self.presenter?.presentSaveUserInFirebase(response: presenterResponse)
+                    })
+                }
+            case .failure(let error):
+                 let response = RegistrationFillProfileDataFlow.SaveUserInFirebase.Response(result: .failure(error))
+                 self.presenter?.presentSaveUserInFirebase(response: response)
             }
-            let response = RegistrationFillProfileDataFlow.SaveUserInFirebase.Response(result: result)
-            self.presenter?.presentSaveUserInFirebase(response: response)
         }
     }
+    
+    func enterUserName(request: RegistrationFillProfileDataFlow.EnterUserName.Request) {
+        let response = RegistrationFillProfileDataFlow.EnterUserName.Response(isWarningShow: request.text.isEmpty)
+        self.presenter?.presentEnterUserName(response: response)
+    }
+    
+    func genderDidSelected(request: RegistrationFillProfileDataFlow.GenderDidSelected.Request) {
+        let isWarningShow = request.gender == .defaults
+        let response = RegistrationFillProfileDataFlow.GenderDidSelected.Response(isWarningShow: isWarningShow)
+        self.presenter?.presentGenderDidSelected(response: response)
+    }
 }
+
+//                self.ref.observe(.value) { [weak self] snapshot in
+//                    let value = snapshot.value as? NSDictionary
+//                    guard let profilleModel = self?.profilleService.mapFBSnapshot(value: value) else {
+//                        return
+//                    }
+//                    self?.profilleService.createUser(model: profilleModel, completion: { result in
+//                        switch result {
+//                        case.success(let profilleModel):
+//                            print(profilleModel)
+//                        case .failure(let error):
+//                            _ = error.localizedDescription
+//                        }
+//                    })
+//                }

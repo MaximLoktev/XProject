@@ -13,7 +13,7 @@ internal enum RegistrationFillProfileDataFlow {
     enum Content {
         case name(String)
         case gender(Gender)
-        case image(URL?)
+        case image(String)
     }
     
     struct Item {
@@ -42,6 +42,21 @@ internal enum RegistrationFillProfileDataFlow {
             let items: [Item]
         }
         
+    }
+    
+    enum ScrollTableViewIfNeeded {
+        
+        struct Request { }
+
+        struct Response {
+            let userModel: UserModel?
+            let index: Int
+        }
+
+        struct ViewModel {
+            let buttonTitle: String
+            let index: Int
+        }
     }
     
     enum NextPage {
@@ -113,12 +128,44 @@ internal enum RegistrationFillProfileDataFlow {
         struct Request { }
         
         struct Response {
-            let result: Result<UserModel, APIError>
+            let result: Result<ProfilleModel, APIError>
         }
         
         enum ViewModel {
             case success
             case failure(title: String, description: String)
+        }
+    }
+    
+    enum EnterUserName {
+        
+        struct Request {
+            let text: String
+        }
+        
+        struct Response {
+            let isWarningShow: Bool
+        }
+        
+        struct ViewModel {
+            let isWarningShow: Bool
+            let textError: String
+        }
+    }
+    
+    enum GenderDidSelected {
+        
+        struct Request {
+            let gender: Gender
+        }
+        
+        struct Response {
+            let isWarningShow: Bool
+        }
+        
+        struct ViewModel {
+            let isWarningShow: Bool
+            let textError: String
         }
     }
 }

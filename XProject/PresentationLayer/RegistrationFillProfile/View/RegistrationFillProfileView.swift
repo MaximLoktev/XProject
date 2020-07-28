@@ -47,10 +47,22 @@ class RegistrationFillProfileView: UIView {
         return view
     }()
     
+    private let warningLabel: UILabel = {
+        let label = UILabel()
+        //label.text = "Не все поля заполнены"
+        label.textColor = #colorLiteral(red: 0.521568656, green: 0.1098039225, blue: 0.05098039284, alpha: 1)
+        label.font = .systemFont(ofSize: 12.0)
+        label.textAlignment = .left
+        label.isHidden = true
+        
+        return label
+    }()
+    
     private let nextButton: UIButton = {
         let button = UIButton.shadowButton()
         button.setTitle("Далее", for: .normal)
         button.setTitleColor(.white, for: .normal)
+        button.isEnabled = false
         
         return button
     }()
@@ -76,10 +88,9 @@ class RegistrationFillProfileView: UIView {
         addSubview(titleLabel)
         addSubview(cardView)
         cardView.addSubview(collectionView)
+        cardView.addSubview(warningLabel)
         cardView.addSubview(nextButton)
         cardView.addSubview(pageControll)
-        
-        //collectionView.sc
         
         nextButton.addTarget(self, action: #selector(nextButtonAction(_:)), for: .touchUpInside)
         
@@ -111,8 +122,15 @@ class RegistrationFillProfileView: UIView {
         nextButton.setTitle(title, for: .normal)
     }
     
-    func scroll(to page: Int) {
-        collectionView.scrollToItem(at: IndexPath(item: page, section: 0), at: .right, animated: true)
+    func scroll(to page: Int, animated: Bool) {
+        collectionView.scrollToItem(at: IndexPath(item: page, section: 0), at: .right, animated: animated)
+    }
+    
+    func setupNameError(isErrorShow: Bool, textError: String) {
+        nextButton.isEnabled = false
+        warningLabel.text = textError
+        warningLabel.isHidden = !isErrorShow
+        nextButton.isEnabled = !isErrorShow
     }
     
     // MARK: - Actions
@@ -137,7 +155,7 @@ class RegistrationFillProfileView: UIView {
         } else if let cell = cell as? RegistrationFillProfileGenderCell {
             content = .gender(cell.genderPicker.genderLvl)
         } else if let cell = cell as? RegistrationFillProfileImageCell {
-            content = .image(cell.imageUrl)
+            content = .image(cell.imageName ?? "")
         }
         
         return content
@@ -164,6 +182,10 @@ class RegistrationFillProfileView: UIView {
         collectionView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
             make.bottom.equalTo(nextButton.snp.top).offset(-10.0)
+        }
+        warningLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(nextButton.snp.top).offset(-4.0)
+            make.left.right.equalToSuperview().inset(20.0)
         }
         nextButton.snp.makeConstraints { make in
             make.height.equalTo(44.0)

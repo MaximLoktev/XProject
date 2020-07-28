@@ -15,11 +15,16 @@ class RegistrationFillProfileGenderCell: RegistrationFillProfileCell {
     
     let genderPicker = InsetPickerView()
     
+    var genderDidSelected: ((Gender) -> Void)?
+    
     // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        genderPicker.genderDidSelected = { [weak self] gender in
+            self?.genderDidSelected?(gender)
+        }
         genderPicker.selectRow(0, inComponent: 0, animated: true)
         
         addSubview(genderPicker)
@@ -43,10 +48,10 @@ class RegistrationFillProfileGenderCell: RegistrationFillProfileCell {
     
     private func makeConstraints() {
         genderPicker.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(8.0)
+            make.top.equalTo(titleLabel.snp.bottom).offset(0.0)
             make.left.equalTo(titleLabel.snp.left)
             make.right.equalTo(titleLabel.snp.right)
-            make.bottom.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-6.0)
         }
     }
 }

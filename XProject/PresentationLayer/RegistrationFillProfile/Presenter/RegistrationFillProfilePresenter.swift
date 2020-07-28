@@ -10,11 +10,14 @@ import Foundation
 
 internal protocol RegistrationFillProfilePresentationLogic {
     func presentLoad(response: RegistrationFillProfileDataFlow.Load.Response)
+    func presentScrollTableViewIfNeeded(response: RegistrationFillProfileDataFlow.ScrollTableViewIfNeeded.Response)
     func presentNextPage(response: RegistrationFillProfileDataFlow.NextPage.Response)
     func presentCreateNamedImage(response: RegistrationFillProfileDataFlow.CreateNamedImage.Response)
     func presentSelectPage(response: RegistrationFillProfileDataFlow.SelectPage.Response)
     func presentAddUserImage(response: RegistrationFillProfileDataFlow.AddUserImage.Response)
     func presentSaveUserInFirebase(response: RegistrationFillProfileDataFlow.SaveUserInFirebase.Response)
+    func presentEnterUserName(response: RegistrationFillProfileDataFlow.EnterUserName.Response)
+    func presentGenderDidSelected(response: RegistrationFillProfileDataFlow.GenderDidSelected.Response)
 }
 
 internal class RegistrationFillProfilePresenter: RegistrationFillProfilePresentationLogic {
@@ -31,6 +34,17 @@ internal class RegistrationFillProfilePresenter: RegistrationFillProfilePresenta
         viewController?.displayLoad(viewModel: viewModel)
     }
     
+    func presentScrollTableViewIfNeeded(response: RegistrationFillProfileDataFlow.ScrollTableViewIfNeeded.Response) {
+        
+        let items = makeItems(userModel: response.userModel)
+        let item = items[response.index]
+        let buttonTitle = item.buttonTitle
+        
+        let viewModel = RegistrationFillProfileDataFlow.ScrollTableViewIfNeeded.ViewModel(buttonTitle: buttonTitle,
+                                                                                          index: response.index)
+        viewController?.displayScrollTableViewIfNeeded(viewModel: viewModel)
+    }
+    
     func presentNextPage(response: RegistrationFillProfileDataFlow.NextPage.Response) {
         let viewModel: RegistrationFillProfileDataFlow.NextPage.ViewModel
         
@@ -41,7 +55,7 @@ internal class RegistrationFillProfilePresenter: RegistrationFillProfilePresenta
             let currentPage = isLastPage ? items.count - 1 : page
             
             var isNameFilled = false
-            if case .name = items[page - 1].content, userModel.image == nil {
+            if case .name = items[page - 1].content {
                 isNameFilled = true
             }
             let buttonTitle = items[currentPage].buttonTitle
@@ -105,6 +119,21 @@ internal class RegistrationFillProfilePresenter: RegistrationFillProfilePresenta
         viewController?.displaySaveUserInFirebase(viewModel: viewModel)
     }
     
+    func presentEnterUserName(response: RegistrationFillProfileDataFlow.EnterUserName.Response) {
+        let textError = "Поле не заполнено"
+        let viewModel = RegistrationFillProfileDataFlow.EnterUserName.ViewModel(isWarningShow: response.isWarningShow,
+                                                                                textError: textError)
+        viewController?.displayEnterUserName(viewModel: viewModel)
+    }
+    
+    func presentGenderDidSelected(response: RegistrationFillProfileDataFlow.GenderDidSelected.Response) {
+        let isWarningShow = response.isWarningShow
+        let textError = "Выберите пол"
+        let viewModel = RegistrationFillProfileDataFlow.GenderDidSelected.ViewModel(isWarningShow: isWarningShow,
+                                                                                    textError: textError)
+        viewController?.displayGenderDidSelected(viewModel: viewModel)
+    }
+    
     private func makeItems(userModel: UserModel?) -> [RegistrationFillProfileDataFlow.Item] {
         
         guard let userModel = userModel else {
@@ -119,7 +148,7 @@ internal class RegistrationFillProfilePresenter: RegistrationFillProfilePresenta
                                                  content: .gender(userModel.gender),
                                                  buttonTitle: "Далее"),
             RegistrationFillProfileDataFlow.Item(title: "Фото",
-                                                 content: .image(userModel.image),
+                                                 content: .image(userModel.imageName),
                                                  buttonTitle: "Начать")
         ]
     }

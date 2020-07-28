@@ -20,6 +20,12 @@ internal class NewsFeetView: UIView {
 
     weak var delegate: NewsFeetViewDelegate?
     
+    private let image: UIImageView = {
+        let image = UIImageView()
+        
+        return image
+    }()
+    
     var player: AVAudioPlayer = {
         let audio = AVAudioPlayer()
         
@@ -48,6 +54,7 @@ internal class NewsFeetView: UIView {
         
         backgroundColor = .blue
         
+        addSubview(image)
         addSubview(onPlayerButton)
         addSubview(offPlayerButton)
         
@@ -59,6 +66,15 @@ internal class NewsFeetView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARk: - Setup
+    
+    func setupImage(imageURL: String?) {
+        guard let imageURL = imageURL else {
+            return
+        }
+        image.kf.setImage(with: URL(string: imageURL), placeholder: #imageLiteral(resourceName: "profilleIcon"))
     }
     
     // MARK: - Actions
@@ -80,6 +96,10 @@ internal class NewsFeetView: UIView {
     // MARK: - Layout
     
     private func makeConstraints() {
+        image.snp.makeConstraints { make in
+            make.height.width.equalTo(150.0)
+            make.center.equalToSuperview()
+        }
         onPlayerButton.snp.makeConstraints { make in
             make.height.equalTo(20.0)
             make.width.equalTo(20.0)

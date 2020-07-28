@@ -15,9 +15,15 @@ class RegistrationFillProfileDataManager: NSObject, UICollectionViewDataSource,
     
     var items: [RegistrationFillProfileDataFlow.Item] = []
     
+    var currentPage = 0
+    
     var onPageSelected: ((Int) -> Void)?
     
     var onImageTapped: (() -> Void)?
+    
+    var textFieldDidEditing: ((String) -> Void)?
+    
+    var genderDidSelected: ((Gender) -> Void)?
 
     // MARK: - UICollectionViewDataSource
     
@@ -36,6 +42,7 @@ class RegistrationFillProfileDataManager: NSObject, UICollectionViewDataSource,
             let cell = collectionView.dequeueReusableCell(withClass: RegistrationFillProfileNameCell.self,
                                                           forIndexPath: indexPath)
             cell.setupCell(title: item.title, name: username)
+            cell.textFieldDidEditing = textFieldDidEditing
   
             return cell
             
@@ -43,13 +50,14 @@ class RegistrationFillProfileDataManager: NSObject, UICollectionViewDataSource,
             let cell = collectionView.dequeueReusableCell(withClass: RegistrationFillProfileGenderCell.self,
                                                           forIndexPath: indexPath)
             cell.setupCell(title: item.title, gender: gender)
+            cell.genderDidSelected = genderDidSelected
             
             return cell
             
-        case .image(let imageUrl):
+        case .image(let imageName):
             let cell = collectionView.dequeueReusableCell(withClass: RegistrationFillProfileImageCell.self,
                                                           forIndexPath: indexPath)
-            cell.setupCell(title: item.title, imageURL: imageUrl)
+            cell.setupCell(title: item.title, imageName: imageName)
             cell.onImageTapped = onImageTapped
             
             return cell
@@ -72,7 +80,16 @@ class RegistrationFillProfileDataManager: NSObject, UICollectionViewDataSource,
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
+        currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
         onPageSelected?(currentPage)
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.x < scrollView.frame.width * CGFloat(currentPage) {
+            scrollView.bounces = true
+        } else {
+            scrollView.contentOffset = CGPoint(x: scrollView.frame.width * CGFloat(currentPage), y: 0.0)
+            scrollView.bounces = false
+        }
     }
 }

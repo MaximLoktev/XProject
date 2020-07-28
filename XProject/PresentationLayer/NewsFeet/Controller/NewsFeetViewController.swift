@@ -7,6 +7,7 @@
 //
 
 import AVFoundation
+import Kingfisher
 import UIKit
 
 internal protocol NewsFeetModuleOutput: class {
@@ -25,6 +26,20 @@ internal class NewsFeetViewController: UIViewController, NewsFeetModuleInput, Ne
 
     var moduleView: NewsFeetView!
     
+    private let profilleCoreDataService: ProfileCoreDataService
+    
+    // MARK: - Init
+    
+    init(profilleCoreDataService: ProfileCoreDataService) {
+        self.profilleCoreDataService = profilleCoreDataService
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - View life cycle
 
     override func loadView() {
@@ -35,6 +50,17 @@ internal class NewsFeetViewController: UIViewController, NewsFeetModuleInput, Ne
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tabBarItem.title = "Новости"
+        
+        profilleCoreDataService.fetchUser(completion: { [weak self] result in
+            switch result {
+            case .success(let user):
+                self?.moduleView.setupImage(imageURL: user.imageURL)
+            case.failure(let error):
+                _ = error.localizedDescription
+            }
+        })
         
         audioPlayer()
     }

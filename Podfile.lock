@@ -76,6 +76,9 @@ PODS:
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.4.0)
   - KeychainAccess (4.1.0)
+  - Kingfisher (5.14.1):
+    - Kingfisher/Core (= 5.14.1)
+  - Kingfisher/Core (5.14.1)
   - leveldb-library (1.22)
   - lottie-ios (3.1.6)
   - nanopb (1.30905.0):
@@ -93,6 +96,7 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Storage
   - KeychainAccess
+  - Kingfisher (~> 5.0)
   - lottie-ios
   - SnapKit (~> 5.0.0)
   - SwiftLint
@@ -112,6 +116,7 @@ SPEC REPOS:
     - GoogleUtilities
     - GTMSessionFetcher
     - KeychainAccess
+    - Kingfisher
     - leveldb-library
     - lottie-ios
     - nanopb
@@ -133,6 +138,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: e121a3867449ce16b0e35ddf1797ea7a389ffdf2
   GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
+  Kingfisher: 8050bc6f7f68cbf3908bd04df7ccbac188f6d6d6
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   lottie-ios: 85ce835dd8c53e02509f20729fc7d6a4e6645a0a
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
@@ -140,6 +146,6 @@ SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftLint: 55e96a4a4d537d4a3156859fc1c54bd24851a046
 
-PODFILE CHECKSUM: 33df7a49138af3ef84a71f891c4a01bc8e5369f8
+PODFILE CHECKSUM: 814d65869514637cba8eb803e8652962701da03e
 
 COCOAPODS: 1.9.1

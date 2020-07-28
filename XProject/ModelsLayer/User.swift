@@ -31,9 +31,15 @@ enum Gender: Int, Codable, CaseIterable {
 struct UserModel: Codable {
     var name: String
     var gender: Gender
-    var image: URL?
+    let imageName: String = "userImageKey.png"
     
-    func convertToDictionary() -> Any {
-        ["name": name, "gender": gender.description]
+    func convertToDictionary(imageUrl: String) -> Any {
+        ["name": name, "gender": gender.description, "imageURL": imageUrl]
     }
+}
+
+struct ProfilleModel {
+    let name: String
+    let gender: Gender
+    let imageURL: String
 }

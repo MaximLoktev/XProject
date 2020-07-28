@@ -19,10 +19,13 @@ internal class RegistrationFillProfileBuilder: RegistrationFillProfileBuildable 
 
     private let fileDataStorageService: FileDataStorageService
     
+    private let profilleCoreDataService: ProfileCoreDataService
+    
     // MARK: - Init
 
-    init(fileDataStorageService: FileDataStorageService) {
+    init(fileDataStorageService: FileDataStorageService, profilleCoreDataService: ProfileCoreDataService) {
         self.fileDataStorageService = fileDataStorageService
+        self.profilleCoreDataService = profilleCoreDataService
     }
 
     // MARK: - RegistrationFillProfileBuildable
@@ -30,7 +33,8 @@ internal class RegistrationFillProfileBuilder: RegistrationFillProfileBuildable 
     func build(withModuleOutput output: RegistrationFillProfileModuleOutput)
         -> UIViewController & RegistrationFillProfileModuleInput {
         let viewController = RegistrationFillProfileViewController()
-        let interactor = RegistrationFillProfileInteractor(fileDataStorageService: fileDataStorageService)
+            let interactor = RegistrationFillProfileInteractor(fileDataStorageService: fileDataStorageService,
+                                                               profilleCoreDataService: profilleCoreDataService)
         let presenter = RegistrationFillProfilePresenter()
         viewController.interactor = interactor
         viewController.moduleOutput = output

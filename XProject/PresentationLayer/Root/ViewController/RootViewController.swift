@@ -46,7 +46,10 @@ class RootViewController: UITabBarController, RootModuleInput, RegistrationModul
     
     private func startLoading() {
         let haveSession = appDependency.sessionManager.haveSession()
-        let haveUser = appDependency.fileDataStorageService.isUserCreated()
+        var haveUser = false
+        appDependency.profilleCoreDataService.isUserCreated { isCreated in
+            haveUser = isCreated
+        }
         
         tabBar.isHidden = !haveSession || !haveUser
         
@@ -65,10 +68,10 @@ class RootViewController: UITabBarController, RootModuleInput, RegistrationModul
     private func setupMainControllers() {
         
         let newsFeetViewController = startNewsFeetCoordinator()
-        newsFeetViewController.tabBarItem = UITabBarItem.simpleIconItem(image: #imageLiteral(resourceName: "fireIcon"), tag: 0)
+        newsFeetViewController.tabBarItem = UITabBarItem.simpleIconItem(title: "Новости", image: #imageLiteral(resourceName: "fireIcon"), tag: 0)
         
         let profilleViewController = startProfilleCoordinator()
-        profilleViewController.tabBarItem = UITabBarItem.simpleIconItem(image: #imageLiteral(resourceName: "profilleIcon"), tag: 1)
+        profilleViewController.tabBarItem = UITabBarItem.simpleIconItem(title: "Профиль", image: #imageLiteral(resourceName: "profilleIcon"), tag: 1)
 
         setViewControllers([newsFeetViewController, profilleViewController], animated: true)
     }
@@ -76,7 +79,8 @@ class RootViewController: UITabBarController, RootModuleInput, RegistrationModul
     private func startNewsFeetCoordinator() -> UINavigationController {
         let navigationController = UINavigationController()
         
-        newsFeetCoordinator = NewsFeetCoordinator(navigationController: navigationController)
+        newsFeetCoordinator = NewsFeetCoordinator(navigationController: navigationController,
+                                                  profilleCoreDataService: appDependency.profilleCoreDataService)
         newsFeetCoordinator?.start()
         
         return navigationController

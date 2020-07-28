@@ -14,6 +14,8 @@ class InsetPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSourc
     
     var genderLvl: Gender = .defaults
     
+    var genderDidSelected: ((Gender) -> Void)?
+    
     private let pickerArray: [Gender] = [.defaults, .android, .ios, .php]
     
     // MARK: - Init
@@ -50,5 +52,6 @@ class InsetPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSourc
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let gender = pickerArray[row]
         genderLvl = gender
+        genderDidSelected?(gender)
     }
 }

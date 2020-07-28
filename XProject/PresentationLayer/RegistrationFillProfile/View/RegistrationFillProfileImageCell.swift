@@ -13,7 +13,7 @@ class RegistrationFillProfileImageCell: RegistrationFillProfileCell {
     
     // MARK: - Properties
     
-    var imageUrl: URL?
+    var imageName: String?
     
     let photoImageView: UIImageView = {
         let image = UIImageView()
@@ -46,14 +46,9 @@ class RegistrationFillProfileImageCell: RegistrationFillProfileCell {
     
     // MARK: - Setup
     
-    func setupCell(title: String, imageURL: URL?) {
-        guard
-            let imageUrl = imageURL,
-            let imageData = try? Data(contentsOf: imageUrl)
-        else {
-            return
-        }
-        photoImageView.image = UIImage(data: imageData)
+    func setupCell(title: String, imageName: String) {
+        self.imageName = imageName
+        photoImageView.image = LetterImageGenerator.loadImage(name: imageName)
         titleLabel.text = title
     }
     

@@ -41,6 +41,9 @@
 		F568E82724C302310036B7DB /* RegistrationFillProfileGenderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F568E82624C302310036B7DB /* RegistrationFillProfileGenderCell.swift */; };
 		F568E82924C302430036B7DB /* RegistrationFillProfileImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F568E82824C302430036B7DB /* RegistrationFillProfileImageCell.swift */; };
 		F568E82B24C302B70036B7DB /* RegistrationFillProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F568E82A24C302B70036B7DB /* RegistrationFillProfileCell.swift */; };
+		F56E447524CE0A100023EECF /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56E447424CE0A100023EECF /* CoreData.swift */; };
+		F56E447924CEEF5E0023EECF /* ProfileCoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56E447824CEEF5E0023EECF /* ProfileCoreDataService.swift */; };
+		F56E447E24CF73080023EECF /* ProfileFirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56E447D24CF73080023EECF /* ProfileFirebaseService.swift */; };
 		F57D3BE124BD6699001BD1B7 /* AlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57D3BE024BD6699001BD1B7 /* AlertWindowController.swift */; };
 		F57D3BE324BD6869001BD1B7 /* UIAlertViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57D3BE224BD6869001BD1B7 /* UIAlertViewController+Extensions.swift */; };
 		F583C7DF24C2F1DB00DB67AD /* RegistrationFillProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F583C7D924C2F1DB00DB67AD /* RegistrationFillProfilePresenter.swift */; };
@@ -104,6 +107,9 @@
 		F568E82624C302310036B7DB /* RegistrationFillProfileGenderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFillProfileGenderCell.swift; sourceTree = "<group>"; };
 		F568E82824C302430036B7DB /* RegistrationFillProfileImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFillProfileImageCell.swift; sourceTree = "<group>"; };
 		F568E82A24C302B70036B7DB /* RegistrationFillProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFillProfileCell.swift; sourceTree = "<group>"; };
+		F56E447424CE0A100023EECF /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
+		F56E447824CEEF5E0023EECF /* ProfileCoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoreDataService.swift; sourceTree = "<group>"; };
+		F56E447D24CF73080023EECF /* ProfileFirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFirebaseService.swift; sourceTree = "<group>"; };
 		F57D3BE024BD6699001BD1B7 /* AlertWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertWindowController.swift; sourceTree = "<group>"; };
 		F57D3BE224BD6869001BD1B7 /* UIAlertViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertViewController+Extensions.swift"; sourceTree = "<group>"; };
 		F583C7D924C2F1DB00DB67AD /* RegistrationFillProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFillProfilePresenter.swift; sourceTree = "<group>"; };
@@ -203,6 +209,7 @@
 		F52AA0CF24AFCF2C00434267 /* CoreLayer */ = {
 			isa = PBXGroup;
 			children = (
+				F56E447424CE0A100023EECF /* CoreData.swift */,
 				F52AA0D024AFCF5300434267 /* SessionManager.swift */,
 				F52AA0D424B1D77700434267 /* API */,
 			);
@@ -287,6 +294,15 @@
 				F50492E924B4294000621906 /* fireworks.json */,
 			);
 			path = Animation;
+			sourceTree = "<group>";
+		};
+		F56E447A24CF70300023EECF /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				F56E447824CEEF5E0023EECF /* ProfileCoreDataService.swift */,
+				F56E447D24CF73080023EECF /* ProfileFirebaseService.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		F583C7D824C2F16100DB67AD /* RegistrationFillProfile */ = {
@@ -418,6 +434,7 @@
 			isa = PBXGroup;
 			children = (
 				F52AA0D224B037DD00434267 /* FileDataStorageService.swift */,
+				F56E447A24CF70300023EECF /* Profile */,
 			);
 			path = BusinessLogicLayer;
 			sourceTree = "<group>";
@@ -618,9 +635,11 @@
 				F583C7E024C2F1DB00DB67AD /* RegistrationFillProfileViewController.swift in Sources */,
 				F5ED0F152438E3B700405187 /* RegistrationView.swift in Sources */,
 				F568E82924C302430036B7DB /* RegistrationFillProfileImageCell.swift in Sources */,
+				F56E447924CEEF5E0023EECF /* ProfileCoreDataService.swift in Sources */,
 				F568E82124C2FC950036B7DB /* RegistrationFillProfileDataManager.swift in Sources */,
 				F5ED0F052438DFD300405187 /* RootViewController.swift in Sources */,
 				F52AA0D124AFCF5300434267 /* SessionManager.swift in Sources */,
+				F56E447E24CF73080023EECF /* ProfileFirebaseService.swift in Sources */,
 				F52AA0C524AF942800434267 /* UITabBarItem+Extensions.swift in Sources */,
 				F5CA2C132438FEE000CD3C1D /* ASAuthorizationDataManager.swift in Sources */,
 				F583C7E224C2F1DB00DB67AD /* RegistrationFillProfileInteractor.swift in Sources */,
@@ -637,6 +656,7 @@
 				F586354A2440E1E600E11023 /* FillPersonalDataGenderCell.swift in Sources */,
 				F568E82B24C302B70036B7DB /* RegistrationFillProfileCell.swift in Sources */,
 				F583C7E324C2F1DB00DB67AD /* RegistrationFillProfileView.swift in Sources */,
+				F56E447524CE0A100023EECF /* CoreData.swift in Sources */,
 				F568E82724C302310036B7DB /* RegistrationFillProfileGenderCell.swift in Sources */,
 				F52C4046243E70790026EBFA /* FillPersonalDataView.swift in Sources */,
 				F52AA0B624AD257400434267 /* FillPersonalDataFlow.swift in Sources */,

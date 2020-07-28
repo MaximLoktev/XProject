@@ -60,7 +60,7 @@ class FillPersonalDataViewController: UIViewController, FillPersonalDataModuleIn
                 self?.userModel = user
             case.failure(let error):
                 #warning("debug")
-                self?.userModel = UserModel(name: "", gender: .defaults, image: nil)
+                self?.userModel = UserModel(name: "", gender: .defaults)
                 _ = error.localizedDescription
             }
         }
@@ -143,8 +143,7 @@ class FillPersonalDataViewController: UIViewController, FillPersonalDataModuleIn
             userModel?.gender = gender ?? .defaults
         case .image:
             let image = (cell as? FillPersonalDataImageCell)?.photoImageView.image
-            let imageURL = LetterImageGenerator.storeImage(image: image)
-            userModel?.image = imageURL
+            LetterImageGenerator.storeImage(image: image, name: userModel?.imageName ?? "")
             newImage = image
         }
         
@@ -249,8 +248,8 @@ extension FillPersonalDataViewController: UIImagePickerControllerDelegate, UINav
             return
         }
         
-        let imageURL = LetterImageGenerator.storeImage(image: image)
-        userModel.image = imageURL
+//        let imageURL = LetterImageGenerator.storeImage(image: image, name: )
+//        userModel.image = imageURL
         
         fileDataStorageService.writingData(user: userModel) { [weak self] result in
             guard let self = self else {
