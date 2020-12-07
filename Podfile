@@ -12,5 +12,6 @@ target 'XProject' do
     pod 'Firebase/Database'
     pod 'Firebase/Storage'
     pod 'Kingfisher', '~> 5.0'
+    pod 'Segmentio'
     
 end

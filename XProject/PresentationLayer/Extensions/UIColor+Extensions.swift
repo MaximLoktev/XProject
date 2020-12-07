@@ -22,4 +22,16 @@ extension UIColor {
                                                green: 76.0 / 255.0,
                                                blue: 129.0 / 255.0,
                                                alpha: 1.0)
+    static let bluegrey: UIColor = UIColor(red: 113.0 / 255.0,
+                                           green: 163.0 / 255.0,
+                                           blue: 206.0 / 255.0,
+                                           alpha: 1.0)
+    static let peacockBlue: UIColor = UIColor(red: 0.0 / 255.0,
+                                              green: 98.0 / 255.0,
+                                              blue: 170.0 / 255.0,
+                                              alpha: 1.0)
+    static let darkSkyBlue: UIColor = UIColor(red: 85.0 / 255.0,
+                                              green: 192.0 / 255.0,
+                                              blue: 230.0 / 255.0,
+                                              alpha: 1.0)
 }

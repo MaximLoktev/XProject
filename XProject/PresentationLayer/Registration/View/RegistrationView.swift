@@ -21,7 +21,15 @@ class RegistrationView: UIView {
 
     weak var delegate: RegistrationViewDelegate?
     
-    private let animationView = AnimationView()
+    private let animationView: AnimationView = {
+        let animationView = AnimationView()
+        animationView.animation = Animation.named("fireworks")
+        animationView.contentMode = .scaleAspectFill
+        animationView.loopMode = .loop
+        animationView.animationSpeed = 0.8
+        
+       return animationView
+    }()
 
     private let backgroundImageView: UIImageView = {
         let imageView = UIImageView()
@@ -100,6 +108,7 @@ class RegistrationView: UIView {
         super.init(frame: frame)
         
         addSubview(backgroundImageView)
+        addSubview(animationView)
         addSubview(titleLabel)
         addSubview(cardView)
         cardView.addSubview(cardTitleLabel)
@@ -107,7 +116,7 @@ class RegistrationView: UIView {
         cardView.addSubview(peraImageView)
         cardView.addSubview(authButton)
         
-        setupAnimation()
+        animationView.play()
         
         makeConstraints()
     }
@@ -122,15 +131,6 @@ class RegistrationView: UIView {
         ASAuthorizationControllerDelegate) {
         authorizationController.delegate = dataManager
         authorizationController.presentationContextProvider = dataManager
-    }
-    
-    private func setupAnimation() {
-        animationView.animation = Animation.named("fireworks")
-        animationView.contentMode = .scaleAspectFill
-        animationView.loopMode = .loop
-        animationView.animationSpeed = 0.8
-        animationView.play()
-        addSubview(animationView)
     }
     
     // MARK: - Actions

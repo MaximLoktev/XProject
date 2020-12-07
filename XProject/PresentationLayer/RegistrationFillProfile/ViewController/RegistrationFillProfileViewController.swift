@@ -102,6 +102,7 @@ internal class RegistrationFillProfileViewController: UIViewController,
             }
             
             if content.isLastPage {
+                IndicatorAlertController.show()
                 let request = RegistrationFillProfileDataFlow.SaveUserInFirebase.Request()
                 interactor?.saveUserInFirebase(request: request)
             } else {
@@ -139,11 +140,13 @@ internal class RegistrationFillProfileViewController: UIViewController,
     }
     
     func displaySaveUserInFirebase(viewModel: RegistrationFillProfileDataFlow.SaveUserInFirebase.ViewModel) {
+        IndicatorAlertController.hide()
         if case let .failure(title, description) = viewModel {
             let alert = AlertWindowController.alert(title: title, message: description, cancel: "Ok")
             alert.show()
+        } else {
+            moduleOutput?.registrationFillProfileModuleDidShowNewsFeet()
         }
-        moduleOutput?.registrationFillProfileModuleDidShowNewsFeet()
     }
     
     func displayEnterUserName(viewModel: RegistrationFillProfileDataFlow.EnterUserName.ViewModel) {
@@ -188,7 +191,7 @@ internal class RegistrationFillProfileViewController: UIViewController,
         }
         UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseIn, animations: {
             self.moduleView.topTitleLabelConstraint?.update(inset: frame.height / 2)
-            self.moduleView.topCarViewConstraint?.update(inset: frame.height + 8.0)
+            self.moduleView.topCardViewConstraint?.update(inset: frame.height + 8.0)
             self.moduleView.layoutIfNeeded()
         })
     }
@@ -197,7 +200,7 @@ internal class RegistrationFillProfileViewController: UIViewController,
     private func keyboardWillHide(notification: Notification) {
         UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseIn, animations: {
             self.moduleView.topTitleLabelConstraint?.update(inset: 0.0)
-            self.moduleView.topCarViewConstraint?.update(inset: 32.0)
+            self.moduleView.topCardViewConstraint?.update(inset: 32.0)
             self.moduleView.layoutIfNeeded()
         })
     }

@@ -6,7 +6,7 @@
 //  Copyright © 2020 Максим Локтев. All rights reserved.
 //
 
-import Firebase
+import FirebaseCore
 import UIKit
 
 @UIApplicationMain
@@ -18,8 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+        let rootViewController = RootBuilder(dependency: appDependency).build(withModuleOutput: nil)
+        rootViewController.overrideUserInterfaceStyle = .light
         
-        let rootViewController = RootViewController(appDependency: appDependency)
         let window = UIWindow()
         window.rootViewController = rootViewController
         window.makeKeyAndVisible()

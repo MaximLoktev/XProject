@@ -29,14 +29,14 @@ internal class RegistrationFillProfilePresenter: RegistrationFillProfilePresenta
     // MARK: - RegistrationFillProfilePresentationLogic
 
     func presentLoad(response: RegistrationFillProfileDataFlow.Load.Response) {
-        let items = makeItems(userModel: response.userModel)
+        let items = makeItems(profile: response.profile)
         let viewModel = RegistrationFillProfileDataFlow.Load.ViewModel(items: items)
         viewController?.displayLoad(viewModel: viewModel)
     }
     
     func presentScrollTableViewIfNeeded(response: RegistrationFillProfileDataFlow.ScrollTableViewIfNeeded.Response) {
         
-        let items = makeItems(userModel: response.userModel)
+        let items = makeItems(profile: response.profile)
         let item = items[response.index]
         let buttonTitle = item.buttonTitle
         
@@ -49,8 +49,8 @@ internal class RegistrationFillProfilePresenter: RegistrationFillProfilePresenta
         let viewModel: RegistrationFillProfileDataFlow.NextPage.ViewModel
         
         switch response {
-        case let .success(userModel, page):
-            let items = makeItems(userModel: userModel)
+        case let .success(profile, page):
+            let items = makeItems(profile: profile)
             let isLastPage: Bool = page > items.count - 1
             let currentPage = isLastPage ? items.count - 1 : page
             
@@ -84,7 +84,7 @@ internal class RegistrationFillProfilePresenter: RegistrationFillProfilePresenta
     }
     
     func presentSelectPage(response: RegistrationFillProfileDataFlow.SelectPage.Response) {
-        let items = makeItems(userModel: response.userModel)
+        let items = makeItems(profile: response.profile)
         let buttonTitle = items[response.page].buttonTitle
         
         let viewModel = RegistrationFillProfileDataFlow.SelectPage.ViewModel(
@@ -98,8 +98,8 @@ internal class RegistrationFillProfilePresenter: RegistrationFillProfilePresenta
         let viewModel: RegistrationFillProfileDataFlow.AddUserImage.ViewModel
         
         switch response.result {
-        case .success(let userModel):
-            let items = makeItems(userModel: userModel)
+        case .success(let profile):
+            let items = makeItems(profile: profile)
             viewModel = .success(items: items)
         case .failure:
             viewModel = .failure(title: "Ошибка", description: "Не удалось создать изображение!")
@@ -134,21 +134,16 @@ internal class RegistrationFillProfilePresenter: RegistrationFillProfilePresenta
         viewController?.displayGenderDidSelected(viewModel: viewModel)
     }
     
-    private func makeItems(userModel: UserModel?) -> [RegistrationFillProfileDataFlow.Item] {
-        
-        guard let userModel = userModel else {
-            return []
-        }
-        
-        return [
+    private func makeItems(profile: RegistrationFillProfileDataFlow.Profile) -> [RegistrationFillProfileDataFlow.Item] {
+        [
             RegistrationFillProfileDataFlow.Item(title: "Давай знакомиться.\nКак тебя зовут?",
-                                                 content: .name(userModel.name),
+                                                 content: .name(profile.name),
                                                  buttonTitle: "Далее"),
             RegistrationFillProfileDataFlow.Item(title: "Ваш пол",
-                                                 content: .gender(userModel.gender),
+                                                 content: .gender(profile.gender),
                                                  buttonTitle: "Далее"),
             RegistrationFillProfileDataFlow.Item(title: "Фото",
-                                                 content: .image(userModel.imageName),
+                                                 content: .image(profile.image),
                                                  buttonTitle: "Начать")
         ]
     }

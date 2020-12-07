@@ -9,23 +9,67 @@
 import AuthenticationServices
 import UIKit
 
+protocol RootModuleOutput: class {
+    
+}
+
 protocol RootModuleInput: class {
     
 }
 
-class RootViewController: UITabBarController, RootModuleInput, RegistrationModuleOutput {
+protocol RootBuilders {
+    var registrationFillProfile: RegistrationFillProfileBuildable { get }
+    var feed: FeedBuildable { get }
+    var createPost: CreatePostBuildable { get }
+    var editPost: EditPostBuildable { get }
+}
+
+struct BuildersContainer: RootBuilders, NewsFeedBuilders {
+    
+    let builders: RootBuilders
+    
+    init(builders: RootBuilders) {
+        self.builders = builders
+    }
+    
+    var registrationFillProfile: RegistrationFillProfileBuildable {
+        builders.registrationFillProfile
+    }
+    
+    var feed: FeedBuildable {
+        builders.feed
+    }
+    
+    var createPost: CreatePostBuildable {
+        builders.createPost
+    }
+    
+    var editPost: EditPostBuildable {
+        builders.editPost
+    }
+}
+
+class RootViewController: UITabBarController, RootModuleInput {
     
     // MARK: - Properties
 
+    weak var moduleOutput: RootModuleOutput?
+    
     private let appDependency: RootDependency
     
-    private var newsFeetCoordinator: NewsFeetCoordinator?
-    private var profilleCoordinator: ProfilleCoordinator?
+    private var newsFeetCoordinator: NewsFeedCoordinator?
+    
+    private var profileCoordinator: ProfileCoordinator?
+    
+    private let builders: RootBuilders
+    
+    private let rootNavigationController = UINavigationController()
     
     // MARK: - Init
     
-    init(appDependency: RootDependency) {
+    init(appDependency: RootDependency, builders: RootBuilders) {
         self.appDependency = appDependency
+        self.builders = builders
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -39,15 +83,17 @@ class RootViewController: UITabBarController, RootModuleInput, RegistrationModul
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        rootNavigationController.navigationBar.isHidden = true
         startLoading()
     }
     
     // MARK: - RootControllerLogic
     
     private func startLoading() {
-        let haveSession = appDependency.sessionManager.haveSession()
+        //let haveSession = appDependency.sessionManager.haveSession()
+        let haveSession = true
         var haveUser = false
-        appDependency.profilleCoreDataService.isUserCreated { isCreated in
+        appDependency.profileCoreDataService.isUserCreated { isCreated in
             haveUser = isCreated
         }
         
@@ -56,22 +102,25 @@ class RootViewController: UITabBarController, RootModuleInput, RegistrationModul
         if haveUser {
             setupMainControllers()
         } else if haveSession {
-            let viewController = appDependency.registrationFillProfileBuilder.build(withModuleOutput: self)
+            let viewController = builders.registrationFillProfile.build(withModuleOutput: self)
             viewControllers = [viewController]
         } else {
-            let viewController = RegistrationViewController(sessionManager: appDependency.sessionManager)
+            let viewController = RegistrationViewController(sessionManager: appDependency.sessionManager,
+                                                            fileDataStorageService: appDependency.fileDataStorageService
+            )
             viewController.moduleOutput = self
-            viewControllers = [viewController]
+            rootNavigationController.setViewControllers([viewController], animated: false)
+            viewControllers = [rootNavigationController]
         }
     }
     
     private func setupMainControllers() {
         
         let newsFeetViewController = startNewsFeetCoordinator()
-        newsFeetViewController.tabBarItem = UITabBarItem.simpleIconItem(title: "Новости", image: #imageLiteral(resourceName: "fireIcon"), tag: 0)
+        newsFeetViewController.tabBarItem = UITabBarItem.simpleIconItem(title: nil, image: #imageLiteral(resourceName: "feedIcon"), tag: 0)
         
         let profilleViewController = startProfilleCoordinator()
-        profilleViewController.tabBarItem = UITabBarItem.simpleIconItem(title: "Профиль", image: #imageLiteral(resourceName: "profilleIcon"), tag: 1)
+        profilleViewController.tabBarItem = UITabBarItem.simpleIconItem(title: nil, image: #imageLiteral(resourceName: "profileMinus1340"), tag: 1)
 
         setViewControllers([newsFeetViewController, profilleViewController], animated: true)
     }
@@ -79,8 +128,9 @@ class RootViewController: UITabBarController, RootModuleInput, RegistrationModul
     private func startNewsFeetCoordinator() -> UINavigationController {
         let navigationController = UINavigationController()
         
-        newsFeetCoordinator = NewsFeetCoordinator(navigationController: navigationController,
-                                                  profilleCoreDataService: appDependency.profilleCoreDataService)
+        newsFeetCoordinator = NewsFeedCoordinator(navigationController: navigationController,
+                                                  profilleCoreDataService: appDependency.profileCoreDataService,
+                                                  builders: BuildersContainer(builders: builders))
         newsFeetCoordinator?.start()
         
         return navigationController
@@ -89,18 +139,20 @@ class RootViewController: UITabBarController, RootModuleInput, RegistrationModul
     private func startProfilleCoordinator() -> UINavigationController {
         let navigationController = UINavigationController()
            
-        profilleCoordinator = ProfilleCoordinator(navigationController: navigationController)
-        profilleCoordinator?.start()
+        profileCoordinator = ProfileCoordinator(navigationController: navigationController,
+                                                profileCoreDataService: appDependency.profileCoreDataService,
+                                                profileFirebaseService: appDependency.profileFirebaseService)
+        profileCoordinator?.start()
            
         return navigationController
     }
 }
 
-extension RootViewController: FillPersonalDataModuleOutput {
+extension RootViewController: RegistrationModuleOutput {
     
-    func fillPersonalDataModuleDidShowNewsFeet() {
-        tabBar.isHidden = false
-        setupMainControllers()
+    func asauthorizationModuleDidShowRegistration() {
+        let viewController = builders.registrationFillProfile.build(withModuleOutput: self)
+        rootNavigationController.pushViewController(viewController, animated: true)
     }
 }
 

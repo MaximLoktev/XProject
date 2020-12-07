@@ -13,7 +13,7 @@ class RegistrationFillProfileGenderCell: RegistrationFillProfileCell {
     
     // MARK: - Properties
     
-    let genderPicker = InsetPickerView()
+    let genderPicker = GenderPickerView()
     
     var genderDidSelected: ((Gender) -> Void)?
     

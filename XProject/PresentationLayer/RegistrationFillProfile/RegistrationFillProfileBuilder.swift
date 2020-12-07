@@ -21,11 +21,24 @@ internal class RegistrationFillProfileBuilder: RegistrationFillProfileBuildable 
     
     private let profilleCoreDataService: ProfileCoreDataService
     
+    private let imageLocalService: ImageService
+    
+    private let profileFirebaseService: ProfileFirebaseService
+    
+    private let sessionManager: SessionManager
+    
     // MARK: - Init
 
-    init(fileDataStorageService: FileDataStorageService, profilleCoreDataService: ProfileCoreDataService) {
+    init(fileDataStorageService: FileDataStorageService,
+         profilleCoreDataService: ProfileCoreDataService,
+         imageLocalService: ImageService,
+         profileFirebaseService: ProfileFirebaseService,
+         sessionManager: SessionManager) {
         self.fileDataStorageService = fileDataStorageService
         self.profilleCoreDataService = profilleCoreDataService
+        self.imageLocalService = imageLocalService
+        self.profileFirebaseService = profileFirebaseService
+        self.sessionManager = sessionManager
     }
 
     // MARK: - RegistrationFillProfileBuildable
@@ -33,8 +46,11 @@ internal class RegistrationFillProfileBuilder: RegistrationFillProfileBuildable 
     func build(withModuleOutput output: RegistrationFillProfileModuleOutput)
         -> UIViewController & RegistrationFillProfileModuleInput {
         let viewController = RegistrationFillProfileViewController()
-            let interactor = RegistrationFillProfileInteractor(fileDataStorageService: fileDataStorageService,
-                                                               profilleCoreDataService: profilleCoreDataService)
+        let interactor = RegistrationFillProfileInteractor(fileDataStorageService: fileDataStorageService,
+                                                           profilleCoreDataService: profilleCoreDataService,
+                                                           imageLocalService: imageLocalService,
+                                                           profileFirebaseService: profileFirebaseService,
+                                                           sessionManager: sessionManager)
         let presenter = RegistrationFillProfilePresenter()
         viewController.interactor = interactor
         viewController.moduleOutput = output

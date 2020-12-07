@@ -13,7 +13,13 @@ internal enum RegistrationFillProfileDataFlow {
     enum Content {
         case name(String)
         case gender(Gender)
-        case image(String)
+        case image(UIImage?)
+    }
+    
+    struct Profile {
+        var name: String
+        var gender: Gender
+        var image: UIImage?
     }
     
     struct Item {
@@ -35,7 +41,7 @@ internal enum RegistrationFillProfileDataFlow {
         struct Request { }
 
         struct Response {
-            let userModel: UserModel?
+            let profile: Profile
         }
 
         struct ViewModel {
@@ -49,7 +55,7 @@ internal enum RegistrationFillProfileDataFlow {
         struct Request { }
 
         struct Response {
-            let userModel: UserModel?
+            let profile: Profile
             let index: Int
         }
 
@@ -66,7 +72,7 @@ internal enum RegistrationFillProfileDataFlow {
         }
         
         enum Response {
-            case success(userModel: UserModel, page: Int)
+            case success(profile: Profile, page: Int)
             case failure(error: APIError)
         }
         
@@ -81,7 +87,7 @@ internal enum RegistrationFillProfileDataFlow {
         struct Request { }
 
         struct Response {
-            let result: Result<UserModel, APIError>
+            let result: Result<Profile, APIError>
         }
         
         enum ViewModel {
@@ -98,7 +104,7 @@ internal enum RegistrationFillProfileDataFlow {
         
         struct Response {
             let page: Int
-            let userModel: UserModel
+            let profile: Profile
         }
         
         struct ViewModel {
@@ -114,7 +120,7 @@ internal enum RegistrationFillProfileDataFlow {
         }
         
         struct Response {
-            let result: Result<UserModel, APIError>
+            let result: Result<Profile, APIError>
         }
         
         enum ViewModel {
@@ -128,7 +134,7 @@ internal enum RegistrationFillProfileDataFlow {
         struct Request { }
         
         struct Response {
-            let result: Result<ProfilleModel, APIError>
+            let result: Result<ProfileModel, APIError>
         }
         
         enum ViewModel {

@@ -12,12 +12,13 @@ protocol RootDependency {
     var sessionManager: SessionManager { get }
     var fileDataStorageService: FileDataStorageService { get }
     var coreData: CoreData { get }
-    var profilleCoreDataService: ProfileCoreDataService { get }
+    var profileCoreDataService: ProfileCoreDataService { get }
     
     var databaseReference: DatabaseReference { get }
     var profileFirebaseService: ProfileFirebaseService { get }
+    var newFeedFirebaseService: NewsFeedFirebaseService { get }
     
-    var registrationFillProfileBuilder: RegistrationFillProfileBuildable { get }
+    var imageService: ImageService { get }
 }
 
 class AppDependency: RootDependency {
@@ -28,19 +29,21 @@ class AppDependency: RootDependency {
     
     private(set) lazy var coreData = CoreData()
     
-    private(set) lazy var profilleCoreDataService: ProfileCoreDataService = ProfilleCoreDataServiceImpl(
+    private(set) lazy var profileCoreDataService: ProfileCoreDataService = ProfilleCoreDataServiceImpl(
         coreData: coreData
     )
     
     private(set) lazy var databaseReference: DatabaseReference = DatabaseReference()
     
+    private(set) lazy var imageService: ImageService = ImageServiceImpl()
+    
     private(set) lazy var profileFirebaseService: ProfileFirebaseService = ProfileFirebaseServiceImpl(
-        databaseReference: databaseReference
+        databaseReference: databaseReference,
+        sessionManager: sessionManager
     )
     
-    // MARK: - Builders
-    
-    private(set) lazy var registrationFillProfileBuilder: RegistrationFillProfileBuildable =
-        RegistrationFillProfileBuilder(fileDataStorageService: fileDataStorageService,
-                                       profilleCoreDataService: profilleCoreDataService)
+    private(set) lazy var newFeedFirebaseService: NewsFeedFirebaseService = NewsFeedFirebaseServiceImpl(
+        databaseReference: databaseReference,
+        sessionManager: sessionManager
+    )
 }

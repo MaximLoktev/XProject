@@ -54,10 +54,10 @@ class RegistrationFillProfileDataManager: NSObject, UICollectionViewDataSource,
             
             return cell
             
-        case .image(let imageName):
+        case .image(let image):
             let cell = collectionView.dequeueReusableCell(withClass: RegistrationFillProfileImageCell.self,
                                                           forIndexPath: indexPath)
-            cell.setupCell(title: item.title, imageName: imageName)
+            cell.setupCell(title: item.title, image: image)
             cell.onImageTapped = onImageTapped
             
             return cell

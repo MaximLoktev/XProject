@@ -9,10 +9,9 @@
 import Foundation
 
 protocol ProfileCoreDataService {
-    func createUser(model: ProfilleModel, completion: @escaping (Result<ProfilleModel, APIError>) -> Void)
-    func fetchUser(completion: @escaping (Result<ProfilleModel, APIError>) -> Void)
+    func createUser(model: ProfileModel, completion: @escaping (Result<ProfileModel, APIError>) -> Void)
+    func fetchUser(completion: @escaping (Result<ProfileModel, APIError>) -> Void)
     func isUserCreated(completion: @escaping (Bool) -> Void)
-   // func mapFBSnapshot(value: NSDictionary?) -> ProfilleModel?
 }
 
 class ProfilleCoreDataServiceImpl: ProfileCoreDataService {
@@ -23,11 +22,14 @@ class ProfilleCoreDataServiceImpl: ProfileCoreDataService {
         self.coreData = coreData
     }
     
-    func createUser(model: ProfilleModel, completion: @escaping (Result<ProfilleModel, APIError>) -> Void) {
+    func createUser(model: ProfileModel, completion: @escaping (Result<ProfileModel, APIError>) -> Void) {
         let newUser = User(context: self.coreData.context)
         newUser.name = model.name
         newUser.gender = model.gender.description
         newUser.imageURL = model.imageURL
+        newUser.email = model.email
+        newUser.userId = model.userId
+        newUser.birthday = Int64(model.birthday ?? 0)
         
         do {
             try self.coreData.context.save()
@@ -38,17 +40,17 @@ class ProfilleCoreDataServiceImpl: ProfileCoreDataService {
         }
     }
     
-    func fetchUser(completion: @escaping (Result<ProfilleModel, APIError>) -> Void) {
+    func fetchUser(completion: @escaping (Result<ProfileModel, APIError>) -> Void) {
         coreData.fetchObject(entity: User.self, context: coreData.context) { result in
             switch result {
             case .success(let user):
-                guard let gender = mapGender(gender: user.gender ?? "") else {
-                    return
-                }
-                let user = ProfilleModel(name: user.name ?? "",
-                                         gender: gender,
-                                         imageURL: user.imageURL ?? "")
-                completion(.success(user))
+                let userModel = ProfileModel(name: user.name ?? "",
+                                             birthday: Int(user.birthday),
+                                             gender: user.gender ?? "",
+                                             imageURL: user.imageURL ?? "",
+                                             email: user.email ?? "",
+                                             userId: user.userId ?? "")
+                completion(.success(userModel))
             case .failure(let error):
                 completion(.failure(.fetchCoreDataObjectError(error)))
             }
@@ -65,25 +67,6 @@ class ProfilleCoreDataServiceImpl: ProfileCoreDataService {
             }
         }
     }
-    
-//    func mapFBSnapshot(value: NSDictionary?) -> ProfilleModel? {
-//        guard let value = value else {
-//            return nil
-//        }
-//        let name = value["name"] as? String ?? ""
-//        let gender = value["gender"] as? String ?? ""
-//        let imageURL = value["imageURL"] as? String ?? ""
-//
-//        return ProfilleModel(name: name,
-//                             gender: gender,
-//                             imageURL: imageURL)
-//    }
-//
-//    private func mapUser(user: User) -> ProfilleModel? {
-//        ProfilleModel(name: user.name ?? "",
-//                      gender: user.gender ?? "",
-//                      imageURL: user.imageURL ?? "")
-//    }
 
     private func mapGender(gender: String) -> Gender? {
         switch gender {

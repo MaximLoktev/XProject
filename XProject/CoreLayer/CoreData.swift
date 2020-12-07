@@ -64,10 +64,11 @@ internal class CoreData {
         let request = NSFetchRequest<T>(entityName: String(describing: entity))
         request.predicate = predicate
         request.sortDescriptors = sortDescriptors
-        request.fetchLimit = 1
+        //request.fetchLimit = 1
+        #warning("bag")
         
         do {
-            if let object = try context.fetch(request).first {
+            if let object = try context.fetch(request).last {
                 result(.success(object))
             } else {
                 result(.failure(.faildExtractOptionalValue))
@@ -112,8 +113,6 @@ internal class CoreData {
             result(.failure(.deleteCoreDataObjectsError(error)))
         }
     }
-    
-    #warning("Проверить метод удаления всех записей")
 
     func deleteAllObjects<T: NSManagedObject>(entity: T.Type, result: (Result<Void, APIError>) -> Void) {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: entity))

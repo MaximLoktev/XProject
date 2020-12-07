@@ -17,7 +17,24 @@ internal enum APIError: Error {
     case deleteCoreDataObjectsError(Error)
     case updateCoreDataObjectError(Error)
     
-    case firebase(Error)
+    case firebaseSaveImageError(Error)
+    case firebaseSaveProfileError(Error)
+    case firebaseDeletePostError(Error)
+    
+    case fileDataStorageWriteError(Error)
+    case firebaseFetchNewFeedError(Error)
+    case firebaseFetchMyFeedPostError(Error)
+    
+    case firebaseParsedObjectsError
+    
+    case firebaseSaveImagePostError
+    case firebaseSaveImagesPostError(Error)
+    case firebaseSavePostError(Error)
+    
+    case createImageLocalError
+    case storeImageLocalError(Error)
+    case loadImageLocalError(Error)
+    case loadImageLocalPathError
     
     case faildExtractOptionalValue
 }

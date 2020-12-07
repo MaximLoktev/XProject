@@ -69,6 +69,9 @@ extension UIAlertController {
                 restrictedCameraAlertController.show()
             case .denied:
                 permissionDeniedAlertController.show()
+            case .limited:
+                #warning("To do")
+                break
             @unknown default:
                 break
             }

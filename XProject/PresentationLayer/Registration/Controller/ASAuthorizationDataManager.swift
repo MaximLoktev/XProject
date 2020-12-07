@@ -12,34 +12,42 @@ import UIKit
 class ASAuthorizationDataManager: NSObject,
     ASAuthorizationControllerPresentationContextProviding, ASAuthorizationControllerDelegate {
     
-    var sessionManager: SessionManager
+    // MARK: - Properties
     
-    init(sessionManager: SessionManager) {
+    var onUserAuthorization: ((Result<UserModel, APIError>) -> Void)?
+    var onAuthorizationError: ((Error) -> Void)?
+    
+    private let sessionManager: SessionManager
+    private let fileDataStorageService: FileDataStorageService
+    
+    // MARK: - Init
+    
+    init(sessionManager: SessionManager, fileDataStorageService: FileDataStorageService) {
         self.sessionManager = sessionManager
-        sessionManager.storeToken(accessToken: "еуые")
+        self.fileDataStorageService = fileDataStorageService
     }
     
     func authorizationController(controller: ASAuthorizationController,
                                  didCompleteWithAuthorization authorization: ASAuthorization) {
-        switch authorization.credential {
-        case let appleIDCredential as ASAuthorizationAppleIDCredential:
-            
-            // Create an account in your system.
-            let userIdentifier = appleIDCredential.user
-//            let fullName = appleIDCredential.fullName
-//            let email = appleIDCredential.email
-//            
-//            print(userIdentifier, fullName!, email!)
-            
-            sessionManager.storeToken(accessToken: userIdentifier)
-            
-        default:
-            break
+        guard
+            let credential = authorization.credential as? ASAuthorizationAppleIDCredential,
+            let tokenData = credential.authorizationCode,
+            let token = String(data: tokenData, encoding: .utf8)
+        else { return }
+
+        let firstName = credential.fullName?.givenName ?? ""
+        let lastName = credential.fullName?.familyName ?? ""
+        let email = credential.email
+        
+        sessionManager.storeToken(accessToken: token)
+        let userModel = UserModel(name: firstName + lastName, gender: .defaults, email: email)
+        fileDataStorageService.writingData(user: userModel) { [weak self] result in
+            self?.onUserAuthorization?(result)
         }
     }
-    
+
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        //print("Error")
+        onAuthorizationError?(error)
     }
     
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {

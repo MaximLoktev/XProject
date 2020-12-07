@@ -6,10 +6,11 @@
 //  Copyright © 2020 Максим Локтев. All rights reserved.
 //
 
+import AuthenticationServices
 import UIKit
 
 protocol RegistrationModuleOutput: class {
-
+    func asauthorizationModuleDidShowRegistration()
 }
 
 protocol RegistrationModuleInput: class {
@@ -26,13 +27,17 @@ class RegistrationViewController: UIViewController, RegistrationModuleInput, Reg
     
     private let sessionManager: SessionManager
     
+    private let fileDataStorageService: FileDataStorageService
+    
     private let dataManager: ASAuthorizationDataManager
     
     // MARK: - Init
     
-    init(sessionManager: SessionManager) {
+    init(sessionManager: SessionManager, fileDataStorageService: FileDataStorageService) {
         self.sessionManager = sessionManager
-        dataManager = ASAuthorizationDataManager(sessionManager: sessionManager)
+        self.fileDataStorageService = fileDataStorageService
+        dataManager = ASAuthorizationDataManager(sessionManager: sessionManager,
+                                                 fileDataStorageService: fileDataStorageService)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -50,6 +55,30 @@ class RegistrationViewController: UIViewController, RegistrationModuleInput, Reg
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         moduleView.setupAuthorization(dataManager: dataManager)
+        setupDataManager()
+    }
+    
+    // MARK: - Setup DataManager
+    
+    private func setupDataManager() {
+        dataManager.onUserAuthorization = { [weak self] result in
+            switch result {
+            case .success:
+                self?.moduleOutput?.asauthorizationModuleDidShowRegistration()
+            case .failure:
+                let alert = AlertWindowController.alert(title: "Ошибка",
+                                                        message: "Не удалось авторизироваться",
+                                                        cancel: "Ok")
+                alert.show()
+            }
+        }
+        dataManager.onAuthorizationError = { _ in
+            let alert = AlertWindowController.alert(title: "Ошибка",
+                                                    message: "Для продолжения, нужно авторизироваться",
+                                                    cancel: "Ok")
+            alert.show()
+        }
     }
 }

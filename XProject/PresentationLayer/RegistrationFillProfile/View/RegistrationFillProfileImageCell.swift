@@ -46,9 +46,8 @@ class RegistrationFillProfileImageCell: RegistrationFillProfileCell {
     
     // MARK: - Setup
     
-    func setupCell(title: String, imageName: String) {
-        self.imageName = imageName
-        photoImageView.image = LetterImageGenerator.loadImage(name: imageName)
+    func setupCell(title: String, image: UIImage?) {
+        photoImageView.image = image
         titleLabel.text = title
     }
     

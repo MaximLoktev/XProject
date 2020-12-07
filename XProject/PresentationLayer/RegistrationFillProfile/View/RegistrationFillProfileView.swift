@@ -49,7 +49,6 @@ class RegistrationFillProfileView: UIView {
     
     private let warningLabel: UILabel = {
         let label = UILabel()
-        //label.text = "Не все поля заполнены"
         label.textColor = #colorLiteral(red: 0.521568656, green: 0.1098039225, blue: 0.05098039284, alpha: 1)
         label.font = .systemFont(ofSize: 12.0)
         label.textAlignment = .left
@@ -62,7 +61,7 @@ class RegistrationFillProfileView: UIView {
         let button = UIButton.shadowButton()
         button.setTitle("Далее", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.isEnabled = false
+        button.isEnabled = true
         
         return button
     }()
@@ -150,12 +149,13 @@ class RegistrationFillProfileView: UIView {
         
         var content: RegistrationFillProfileDataFlow.Content?
         
-        if let cell = cell as? RegistrationFillProfileNameCell {
+        if let cell = cell as? RegistrationFillProfileNameCell, !cell.name.isEmpty {
             content = .name(cell.name)
-        } else if let cell = cell as? RegistrationFillProfileGenderCell {
+        } else if let cell = cell as? RegistrationFillProfileGenderCell,
+            cell.genderPicker.genderLvl != Gender.defaults {
             content = .gender(cell.genderPicker.genderLvl)
-        } else if let cell = cell as? RegistrationFillProfileImageCell {
-            content = .image(cell.imageName ?? "")
+        } else if cell is RegistrationFillProfileImageCell {
+            content = .image(nil)
         }
         
         return content
@@ -164,7 +164,7 @@ class RegistrationFillProfileView: UIView {
     // MARK: - Layout
     
     var topTitleLabelConstraint: Constraint?
-    var topCarViewConstraint: Constraint?
+    var topCardViewConstraint: Constraint?
     
     private func makeConstraints() {
         backgroundImageView.snp.makeConstraints { make in
@@ -175,7 +175,7 @@ class RegistrationFillProfileView: UIView {
             make.left.right.equalToSuperview().inset(16.0)
         }
         cardView.snp.makeConstraints { make in
-            topCarViewConstraint = make.bottom.equalToSuperview().offset(-32.0).constraint
+            topCardViewConstraint = make.bottom.equalToSuperview().offset(-32.0).constraint
             make.height.equalTo(224.0)
             make.left.right.equalToSuperview().inset(32.0)
         }

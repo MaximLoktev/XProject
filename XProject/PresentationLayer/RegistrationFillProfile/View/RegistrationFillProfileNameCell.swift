@@ -9,7 +9,7 @@
 import SnapKit
 import UIKit
 
-class RegistrationFillProfileNameCell: RegistrationFillProfileCell {
+class RegistrationFillProfileNameCell: RegistrationFillProfileCell, UITextFieldDelegate {
     
     // MARK: - Properties
     
@@ -19,17 +19,14 @@ class RegistrationFillProfileNameCell: RegistrationFillProfileCell {
     
     var textFieldDidEditing: ((String) -> Void)?
     
+    private let textFieldInputValidator: TextFieldInputValidator = AlphanumericsValidator()
+    
     private let textField: InsetTextField = {
         let textField = InsetTextField()
-        textField.font = .systemFont(ofSize: 17.0)
         textField.attributedPlaceholder =
             NSAttributedString(string: "Логин", attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
         textField.textColor = .darkGrey50
-        textField.textAlignment = .left
-        textField.backgroundColor = .clear
         textField.layer.cornerRadius = 12.0
-        textField.clearButtonMode = .always
-        textField.autocorrectionType = .no
         textField.layer.borderWidth = 1.0
         textField.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         
@@ -41,9 +38,9 @@ class RegistrationFillProfileNameCell: RegistrationFillProfileCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        addSubview(textField)
-        
+        textField.delegate = self
         textField.addTarget(self, action: #selector(titleTextFieldDidChange(_:)), for: .editingChanged)
+        addSubview(textField)
         
         makeConstraints()
     }
@@ -64,6 +61,16 @@ class RegistrationFillProfileNameCell: RegistrationFillProfileCell {
     @objc
     private func titleTextFieldDidChange(_ sender: UITextField) {
         textFieldDidEditing?(sender.text ?? "")
+    }
+    
+    // MARK: - UITextFieldDelegate
+    
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
+        textFieldInputValidator.shouldChangeCharacters(of: textField.text ?? "",
+                                                       in: range,
+                                                       replacementText: string)
     }
     
     // MARK: - Layout
